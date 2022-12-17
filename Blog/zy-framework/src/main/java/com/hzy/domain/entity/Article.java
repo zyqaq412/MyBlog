@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 @Data
-@NoArgsConstructor
+@NoArgsConstructor// 无参构造
 @AllArgsConstructor
 @TableName("zy_article")//Table 'zy_blog.article' doesn't exist
 public class Article  {
