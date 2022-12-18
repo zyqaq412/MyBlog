@@ -1,6 +1,8 @@
 package com.hzy.domain.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @title: HotArticleVo
@@ -9,6 +11,8 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HotArticleVo {
     // id
     private long id;
