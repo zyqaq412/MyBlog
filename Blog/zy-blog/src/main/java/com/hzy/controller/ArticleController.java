@@ -17,7 +17,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("article")
+@RequestMapping("/article")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
@@ -28,11 +28,27 @@ public class ArticleController {
 
     }*/
 
+    /**
+     * 查询热门文章
+     * @return
+     */
     @GetMapping("/hotArticleList")
     public ResponseResult hotArticleList(){
         // 查询热门文章 封装成ResponseResult
         ResponseResult result =  articleService.hotArticleList();
         return result;
+    }
+
+    /**
+     * 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/articleList")
+    public ResponseResult articleList(Integer pageNum,Integer pageSize,Long categoryId){
+        return articleService.articleList(pageNum,pageSize,categoryId);
     }
 
 }
