@@ -35,11 +35,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private RedisCache redisCache;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         //获取请求头中的token
         String token = request.getHeader("token");
         if(!StringUtils.hasText(token)){
             //说明该接口不需要登录  直接放行
+
+            /* 测试 随便存一个 都能访问需要认证的资源
+            SecurityContextHolder.getContext().setAuthentication(
+                    new UsernamePasswordAuthenticationToken(new LoginUser(),null,null));*/
             filterChain.doFilter(request, response);
             return;
         }
@@ -65,7 +71,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             WebUtils.renderString(response, JSON.toJSONString(result));
             return;
         }
-        //存入SecurityContextHolder
+        //存入SecurityContextHolder 存放后就可以访问需要认证的资源
         UsernamePasswordAuthenticationToken
                 authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
