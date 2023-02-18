@@ -1,3 +1,6 @@
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  * @title: articlesTest
  * @Author zxwyhzy
@@ -6,4 +9,13 @@
  */
 
 public class articlesTest {
+    @Test
+    public void testBCryptPasswordEncoder(){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encode = passwordEncoder.encode("123");
+        System.out.println(encode);//$2a$10$thltlvKtDb4SAth6C5z3E.zPmSDYRp4LNXb1R0aJ15L.iyFlPMK3i
+        System.out.println(passwordEncoder
+                .matches("123",
+                        "$2a$10$thltlvKtDb4SAth6C5z3E.zPmSDYRp4LNXb1R0aJ15L.iyFlPMK3i"));
+    }
 }
