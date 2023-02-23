@@ -14,8 +14,7 @@ import com.hzy.mapper.CommentMapper;
 import com.hzy.service.CommentService;
 
 import com.hzy.service.UserService;
-import com.hzy.utils.BeanCopyUtil;
-import com.hzy.utils.SecurityUtils;
+import com.hzy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -118,12 +117,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     private List<CommentVo> toCommentVoList(List<Comment> list) {
-        List<CommentVo> commentVos = BeanCopyUtil.copyBeanList(list, CommentVo.class);
+        List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(list, CommentVo.class);
         //遍历vo集合
         for (CommentVo commentVo : commentVos) {
-            //通过creatyBy查询用户的昵称并赋值
-            String nickName = userService.getById(commentVo.getCreateBy()).getNickName();
-            commentVo.setUsername(nickName);
+            if(commentVo.getCreateBy() == -1){
+                commentVo.setUsername("游客");
+            }else {
+                //通过creatyBy查询用户的昵称并赋值
+                String nickName = userService.getById(commentVo.getCreateBy()).getNickName();
+                commentVo.setUsername(nickName);
+            }
+
             //通过toCommentUserId查询用户的昵称并赋值
             //如果toCommentUserId不为-1才进行查询
             if(commentVo.getToCommentUserId()!=-1){
