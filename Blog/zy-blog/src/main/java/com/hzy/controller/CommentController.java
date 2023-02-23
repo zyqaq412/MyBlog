@@ -1,5 +1,6 @@
 package com.hzy.controller;
 
+import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.Comment;
 import com.hzy.service.CommentService;
@@ -27,9 +28,17 @@ public class CommentController {
      * @param pageSize 每页条数
      * @return
      */
-    @GetMapping("/commentList")
+    /*@GetMapping("/commentList")
     public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
         return commentService.commentList(articleId,pageNum,pageSize);
+    }*/
+    @GetMapping("/commentList")
+    public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
+        return commentService.commentList(SystemConstants.ARTICLE_COMMENT,articleId,pageNum,pageSize);
+    }
+    @GetMapping("/linkCommentList")
+    public ResponseResult linkCommentList(Integer pageNum,Integer pageSize){
+        return commentService.commentList(SystemConstants.LINK_COMMENT,null,pageNum,pageSize);
     }
 
     @PostMapping

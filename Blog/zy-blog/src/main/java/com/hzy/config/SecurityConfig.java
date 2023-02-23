@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //注销接口需要认证才能访问
                 .antMatchers("/logout").authenticated()
                 //jwt过滤器测试用，如果测试没有问题吧这里删除了
-                //.antMatchers("/link/getAllLink").authenticated()
+  //              .antMatchers("/comment/addComment").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
                 // 登录能访问,不登录也能访问,一般用于静态资源js等
                 .anyRequest().permitAll();
