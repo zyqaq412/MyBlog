@@ -22,6 +22,11 @@ public class BlogLoginController {
     @Autowired
     private BlogLoginService blogLoginService;
 
+    /**
+     * 登录
+     * @param user
+     * @return
+     */
     @PostMapping("/login")
     public ResponseResult login(@RequestBody User user){
         // StringUtils.hasText(字符串)
@@ -33,6 +38,10 @@ public class BlogLoginController {
         return blogLoginService.login(user);
     }
 
+    /**
+     * 注销
+     * @return
+     */
     @PostMapping("/logout")
     public ResponseResult logout(){
         return blogLoginService.logout();
