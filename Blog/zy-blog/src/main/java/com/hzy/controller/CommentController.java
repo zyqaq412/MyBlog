@@ -32,15 +32,36 @@ public class CommentController {
     public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
         return commentService.commentList(articleId,pageNum,pageSize);
     }*/
+
+    /**
+     * 查询文章评论
+     * @param articleId 文章id
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return
+     */
     @GetMapping("/commentList")
     public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
         return commentService.commentList(SystemConstants.ARTICLE_COMMENT,articleId,pageNum,pageSize);
     }
+
+
+    /**
+     * 查询友链评论
+     * @param pageNum 页数
+     * @param pageSize 每页条数
+     * @return
+     */
     @GetMapping("/linkCommentList")
     public ResponseResult linkCommentList(Integer pageNum,Integer pageSize){
         return commentService.commentList(SystemConstants.LINK_COMMENT,null,pageNum,pageSize);
     }
 
+    /**
+     * 添加评论
+     * @param comment
+     * @return
+     */
     @PostMapping
     public ResponseResult addComment(@RequestBody Comment comment){
         return commentService.addComment(comment);

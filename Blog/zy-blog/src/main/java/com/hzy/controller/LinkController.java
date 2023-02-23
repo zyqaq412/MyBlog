@@ -19,6 +19,10 @@ public class LinkController {
     @Autowired
     private LinkService linkService;
 
+    /**
+     * 获取所有审核通过的友链
+     * @return
+     */
     @GetMapping("/getAllLink")
     public ResponseResult getAllLink(){
         return linkService.getAllLink();
