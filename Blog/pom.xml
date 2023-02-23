@@ -78,6 +78,14 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>2.9.2</version>
             </dependency>
+            <!--配置处理器依赖：spring-boot-configuration-processor-->
+            <!--在配置文件中配置Person对象的属性值时，spring boot无法自动识别，不会有任何书写提示，为了出现代码提示，就要写这个依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <optional>true</optional>
+            </dependency>
+
         </dependencies>
 </dependencyManagement>
         <build>
