@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
  * @Date: 2022/12/16 16:10
  * @Version 1.0
  */
-public class BeanCopyUtil {
-    private BeanCopyUtil() {
+public class BeanCopyUtils {
+    private BeanCopyUtils() {
     }
 
     public static <V> V copyBean(Object source,Class<V> clazz) {

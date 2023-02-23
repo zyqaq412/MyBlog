@@ -10,7 +10,7 @@ import com.hzy.domain.vo.CategoryVo;
 import com.hzy.mapper.CategoryMapper;
 import com.hzy.service.ArticleService;
 import com.hzy.service.CategoryService;
-import com.hzy.utils.BeanCopyUtil;
+import com.hzy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +47,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 filter(category -> SystemConstants.STATUS_NORMAL.equals(category.getStatus()))
                 .collect(Collectors.toList());
         //封装vo
-        List<CategoryVo> categoryVos = BeanCopyUtil.copyBeanList(categories, CategoryVo.class);
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
 
         return ResponseResult.okResult(categoryVos);
     }

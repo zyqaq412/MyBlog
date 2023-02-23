@@ -15,8 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.hzy.utils.*;
 
-import java.util.Objects;
-
 /**
  * @title: BlogLoginServiceImpl
  * @Author zxwyhzy
@@ -53,7 +51,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
         //把token和userinfo封装 返回
         //把User转换成UserInfoVo
-        UserInfoVo userInfoVo = BeanCopyUtil.copyBean(loginUser.getUser(), UserInfoVo.class);
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         BlogUserLoginVo vo = new BlogUserLoginVo(jwt,userInfoVo);
         return ResponseResult.okResult(vo);
     }

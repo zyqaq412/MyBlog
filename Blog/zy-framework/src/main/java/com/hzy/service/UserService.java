@@ -1,6 +1,7 @@
 package com.hzy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.User;
 
 
@@ -11,6 +12,8 @@ import com.hzy.domain.entity.User;
  * @since 2023-02-18 23:08:43
  */
 public interface UserService extends IService<User> {
+
+    ResponseResult userInfo();
 
 }
 

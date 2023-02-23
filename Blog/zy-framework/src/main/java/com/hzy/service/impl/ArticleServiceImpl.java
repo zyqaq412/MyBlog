@@ -14,15 +14,12 @@ import com.hzy.domain.vo.PageVo;
 import com.hzy.mapper.ArticleMapper;
 import com.hzy.service.ArticleService;
 import com.hzy.service.CategoryService;
-import com.hzy.utils.BeanCopyUtil;
-import org.springframework.beans.BeanUtils;
+import com.hzy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @title: ArticleServiceImpl
@@ -50,7 +47,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> articles = page.getRecords();
 
         List<HotArticleVo> hotArticleVos =
-                BeanCopyUtil.copyBeanList(articles, HotArticleVo.class);
+                BeanCopyUtils.copyBeanList(articles, HotArticleVo.class);
 
         // 将copy封装到工具类
         /*List<HotArticleVo> articlesVos = new ArrayList<>();
@@ -109,7 +106,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             article.setCategoryName(category.getName());
         }*/
 
-        List<ArticleListVo> articleListVos = BeanCopyUtil.copyBeanList(page.getRecords(), ArticleListVo.class);
+        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(page.getRecords(), ArticleListVo.class);
 
         PageVo pageVo = new PageVo(articleListVos,page.getTotal());
         return ResponseResult.okResult(pageVo);
@@ -120,7 +117,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //根据id查询文章
         Article article = getById(id);
         //转换成VO
-        ArticleDetailVo articleDetailVo = BeanCopyUtil.copyBean(article, ArticleDetailVo.class);
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
         //根据分类id查询分类名
         Long categoryId = articleDetailVo.getCategoryId();
         Category category = categoryService.getById(categoryId);

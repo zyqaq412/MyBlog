@@ -8,7 +8,7 @@ import com.hzy.domain.entity.Link;
 import com.hzy.domain.vo.LinkVo;
 import com.hzy.service.LinkService;
 import com.hzy.mapper.LinkMapper;
-import com.hzy.utils.BeanCopyUtil;
+import com.hzy.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         queryWrapper.eq(Link::getStatus, SystemConstants.LINK_STATUS_NORMAL);
         List<Link> links = list(queryWrapper);
         //转换成vo
-        List<LinkVo> linkVos = BeanCopyUtil.copyBeanList(links, LinkVo.class);
+        List<LinkVo> linkVos = BeanCopyUtils.copyBeanList(links, LinkVo.class);
         //封装返回
         return ResponseResult.okResult(linkVos);
     }
