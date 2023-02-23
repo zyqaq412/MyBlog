@@ -18,13 +18,32 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 获取登录用户数据
+     * @return
+     */
     @GetMapping("/userInfo")
     public ResponseResult userInfo(){
         return userService.userInfo();
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     @PutMapping("/userInfo")
     public ResponseResult updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
+    }
+
+    /**
+     * 注册用户
+     * @param user
+     * @return
+     */
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody User user){
+        return userService.register(user);
     }
 }
