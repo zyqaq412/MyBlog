@@ -1,11 +1,10 @@
 package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.entity.User;
 import com.hzy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @title: UserController
@@ -22,5 +21,10 @@ public class UserController {
     @GetMapping("/userInfo")
     public ResponseResult userInfo(){
         return userService.userInfo();
+    }
+
+    @PutMapping("/userInfo")
+    public ResponseResult updateUserInfo(@RequestBody User user){
+        return userService.updateUserInfo(user);
     }
 }
