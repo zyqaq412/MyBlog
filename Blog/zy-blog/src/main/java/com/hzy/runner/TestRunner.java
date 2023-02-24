@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2023/2/24 15:01
  * @Version 1.0
  */
-@Component
+//@Component
 public class TestRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
