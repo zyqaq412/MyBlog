@@ -50,7 +50,7 @@ public class LoginController {
      *
      * @return 用户权限，用户角色，用户信息
      */
-    @GetMapping("getInfo")
+    @GetMapping("/getInfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
         //获取当前登录的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();
