@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @title: ZyAppLicationo
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @MapperScan("com.hzy.mapper")
 @EnableScheduling // 开启定时任务
+@EnableSwagger2
 public class ZyAppLicationo {
     public static void main(String[] args) {
         SpringApplication.run(ZyAppLicationo.class,args);
