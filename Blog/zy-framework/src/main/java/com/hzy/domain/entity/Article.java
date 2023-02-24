@@ -57,5 +57,16 @@ public class Article  {
     @TableField(exist = false)// 该字段在表中不存在
     private String categoryName;
 
+    /**
+     *  更新数据库浏览量时需要传递Article对象
+     *  redis里面只有文章id和浏览量
+     *  所以需要这个构造函数创建对象
+     * @param id
+     * @param viewCount
+     */
+    public Article(Long id, long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
 }
 
