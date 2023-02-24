@@ -1,5 +1,6 @@
 package com.hzy.controller;
 
+import com.hzy.annotion.SystemLog;
 import com.hzy.domain.ResponseResult;
 import com.hzy.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class UploadController {
      * @return
      */
     @PostMapping("/upload")
+    @SystemLog(BusinessName = "上传头像")
     public ResponseResult uploadImg(MultipartFile img){
         return uploadService.uploadImg(img);
     }

@@ -1,5 +1,6 @@
 package com.hzy.controller;
 
+import com.hzy.annotion.SystemLog;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.User;
 import com.hzy.service.UserService;
@@ -33,6 +34,7 @@ public class UserController {
      * @return
      */
     @PutMapping("/userInfo")
+    @SystemLog(BusinessName = "更新用户信息")
     public ResponseResult updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }
@@ -43,6 +45,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
+    @SystemLog(BusinessName = "注册用户")
     public ResponseResult register(@RequestBody User user){
         return userService.register(user);
     }

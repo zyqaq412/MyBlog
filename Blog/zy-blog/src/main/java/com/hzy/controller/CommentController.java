@@ -1,5 +1,6 @@
 package com.hzy.controller;
 
+import com.hzy.annotion.SystemLog;
 import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.Comment;
@@ -21,13 +22,6 @@ public class CommentController {
     private CommentService commentService;
 
 
-    /**
-     *
-     * @param articleId 文章id
-     * @param pageNum 页码
-     * @param pageSize 每页条数
-     * @return
-     */
     /*@GetMapping("/commentList")
     public ResponseResult commentList(Long articleId,Integer pageNum,Integer pageSize){
         return commentService.commentList(articleId,pageNum,pageSize);
@@ -63,6 +57,7 @@ public class CommentController {
      * @return
      */
     @PostMapping
+    @SystemLog(BusinessName = "发送评论")
     public ResponseResult addComment(@RequestBody Comment comment){
         return commentService.addComment(comment);
 

@@ -1,5 +1,6 @@
 package com.hzy.controller;
 
+import com.hzy.annotion.SystemLog;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.User;
 import com.hzy.enums.AppHttpCodeEnum;
@@ -28,6 +29,7 @@ public class BlogLoginController {
      * @return
      */
     @PostMapping("/login")
+    @SystemLog(BusinessName = "登录")
     public ResponseResult login(@RequestBody User user){
         // StringUtils.hasText(字符串)
         // 如果字符串里面的值为null， ""， "  "，那么返回值为false；否则为true
@@ -43,6 +45,7 @@ public class BlogLoginController {
      * @return
      */
     @PostMapping("/logout")
+    @SystemLog(BusinessName = "注销登录")
     public ResponseResult logout(){
         return blogLoginService.logout();
     }
