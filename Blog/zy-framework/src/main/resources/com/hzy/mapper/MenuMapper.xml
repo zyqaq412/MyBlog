@@ -14,4 +14,31 @@
             m.`status` = 0 AND
             m.`del_flag` = 0
     </select>
+    <select id="selectAllRouterMenu" resultType="com.hzy.domain.entity.Menu">
+        SELECT
+            DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+        FROM
+            `sys_menu` m
+        WHERE
+            m.`menu_type` IN ('C','M') AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0
+        ORDER BY
+            m.parent_id,m.order_num
+    </select>
+    <select id="selectRouterMenuTreeByUserId" resultType="com.hzy.domain.entity.Menu">
+        SELECT
+            DISTINCT m.id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, IFNULL(m.perms,'') AS perms, m.is_frame,  m.menu_type, m.icon, m.order_num, m.create_time
+        FROM
+            `sys_user_role` ur
+                LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+        WHERE
+            ur.`user_id` = #{userId} AND
+            m.`menu_type` IN ('C','M') AND
+            m.`status` = 0 AND
+            m.`del_flag` = 0
+        ORDER BY
+            m.parent_id,m.order_num
+    </select>
 </mapper>

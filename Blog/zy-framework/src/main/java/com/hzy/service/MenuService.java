@@ -22,5 +22,12 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     List<String> selectPermsByUserId(Long id);
+
+    /**
+     *  根据用户id查询菜单栏
+     * @param userId
+     * @return
+     */
+    List<Menu> selectRouterMenuTreeByUserId(Long userId);
 }
 
