@@ -40,5 +40,7 @@ public interface TagService extends IService<Tag> {
     ResponseResult deleteTagById(Long id);
 
     ResponseResult getTagInfo(Long id);
+
+    ResponseResult updateTagInfo(Tag tag);
 }
 

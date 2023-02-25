@@ -67,4 +67,10 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
         return ResponseResult.okResult(tagVo);
     }
+
+    @Override
+    public ResponseResult updateTagInfo(Tag tag) {
+        updateById(tag);
+        return ResponseResult.okResult();
+    }
 }

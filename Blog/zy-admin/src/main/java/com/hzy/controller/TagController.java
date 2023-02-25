@@ -62,4 +62,14 @@ public class TagController {
     public ResponseResult getTag(@PathVariable("id") Long id){
         return tagService.getTagInfo(id);
     }
+
+    /**
+     *  修改标签信息
+     * @param tag
+     * @return
+     */
+    @PutMapping
+    public ResponseResult updateTagInfo(@RequestBody Tag tag){
+        return tagService.updateTagInfo(tag);
+    }
 }
