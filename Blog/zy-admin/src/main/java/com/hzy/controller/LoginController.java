@@ -2,8 +2,10 @@ package com.hzy.controller;
 
 import com.hzy.domain.LoginUser;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.entity.Menu;
 import com.hzy.domain.entity.User;
 import com.hzy.domain.vo.AdminUserInfoVo;
+import com.hzy.domain.vo.RoutersVo;
 import com.hzy.domain.vo.UserInfoVo;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.exception.SystemException;
@@ -66,6 +68,15 @@ public class LoginController {
 
         AdminUserInfoVo adminUserInfoVo = new AdminUserInfoVo(perms,roleKeyList,userInfoVo);
         return ResponseResult.okResult(adminUserInfoVo);
+    }
+
+    @GetMapping("/getRouters")
+    public ResponseResult<RoutersVo> getRouters(){
+        Long userId = SecurityUtils.getUserId();
+        //查询menu 结果是tree的形式
+        List<Menu> menus = menuService.selectRouterMenuTreeByUserId(userId);
+        //封装数据返回
+        return ResponseResult.okResult(new RoutersVo(menus));
     }
 
 }
