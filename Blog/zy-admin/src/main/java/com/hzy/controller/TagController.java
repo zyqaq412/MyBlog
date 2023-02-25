@@ -32,8 +32,24 @@ public class TagController {
         return tagService.pageTagList(pageNum,pageSize,tagListDto);
     }
 
+    /**
+     *  添加标签
+     * @param addTag
+     * @return
+     */
     @PostMapping
     public ResponseResult addTag(@RequestBody Tag addTag){
         return tagService.addTag(addTag);
+    }
+
+    /**
+     *  删除标签 逻辑删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public ResponseResult deleteTag(@PathVariable("id") Long id){
+       return tagService.deleteTagById(id);
+
     }
 }
