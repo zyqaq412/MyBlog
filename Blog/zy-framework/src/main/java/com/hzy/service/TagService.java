@@ -1,7 +1,10 @@
 package com.hzy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.TagListDto;
 import com.hzy.domain.entity.Tag;
+import com.hzy.domain.vo.PageVo;
 
 
 /**
@@ -12,5 +15,14 @@ import com.hzy.domain.entity.Tag;
  */
 public interface TagService extends IService<Tag> {
 
+
+    /**
+     *  分页查询标签
+     * @param pageNum
+     * @param pageSize
+     * @param tagListDto
+     * @return
+     */
+    ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
 }
 
