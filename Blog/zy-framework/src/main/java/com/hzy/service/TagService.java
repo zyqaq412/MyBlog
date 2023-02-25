@@ -24,5 +24,7 @@ public interface TagService extends IService<Tag> {
      * @return
      */
     ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
+
+    ResponseResult addTag(Tag addTag);
 }
 

@@ -2,12 +2,11 @@ package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.TagListDto;
+import com.hzy.domain.entity.Tag;
 import com.hzy.domain.vo.PageVo;
 import com.hzy.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @title: TagController
@@ -31,5 +30,10 @@ public class TagController {
     @GetMapping("/list")
     public ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagListDto tagListDto){
         return tagService.pageTagList(pageNum,pageSize,tagListDto);
+    }
+
+    @PostMapping
+    public ResponseResult addTag(@RequestBody Tag addTag){
+        return tagService.addTag(addTag);
     }
 }

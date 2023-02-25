@@ -4,12 +4,14 @@ package com.hzy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hzy.domain.LoginUser;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.TagListDto;
 import com.hzy.domain.entity.Tag;
 import com.hzy.domain.vo.PageVo;
 import com.hzy.mapper.TagMapper;
 import com.hzy.service.TagService;
+import com.hzy.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,5 +38,11 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         //封装数据返回
         PageVo pageVo = new PageVo(page.getRecords(),page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult addTag(Tag addTag) {
+        save(addTag);
+        return ResponseResult.okResult();
     }
 }
