@@ -70,6 +70,10 @@ public class LoginController {
         return ResponseResult.okResult(adminUserInfoVo);
     }
 
+    /**
+     *  获取菜单
+     * @return
+     */
     @GetMapping("/getRouters")
     public ResponseResult<RoutersVo> getRouters(){
         Long userId = SecurityUtils.getUserId();
@@ -77,6 +81,15 @@ public class LoginController {
         List<Menu> menus = menuService.selectRouterMenuTreeByUserId(userId);
         //封装数据返回
         return ResponseResult.okResult(new RoutersVo(menus));
+    }
+
+    /**
+     *  注销登录
+     * @return
+     */
+    @PostMapping("/user/logout")
+    public ResponseResult logout(){
+        return loginService.logout();
     }
 
 }

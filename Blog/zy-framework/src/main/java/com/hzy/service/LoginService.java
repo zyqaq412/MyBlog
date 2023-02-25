@@ -10,5 +10,16 @@ import com.hzy.domain.entity.User;
  * @Version 1.0
  */
 public interface LoginService {
+    /**
+     *  登录
+     * @param user
+     * @return
+     */
     ResponseResult login(User user);
+
+    /**
+     *  注销登录
+     * @return
+     */
+    ResponseResult logout();
 }
