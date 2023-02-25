@@ -3,6 +3,8 @@ package com.hzy.domain.entity;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,6 +60,6 @@ public class Menu  {
     
     private String delFlag;
 
-
+    private List<Menu> children;
 
 }
