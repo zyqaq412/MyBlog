@@ -52,4 +52,14 @@ public class TagController {
        return tagService.deleteTagById(id);
 
     }
+
+    /**
+     *  获取要修改的标签信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseResult getTag(@PathVariable("id") Long id){
+        return tagService.getTagInfo(id);
+    }
 }

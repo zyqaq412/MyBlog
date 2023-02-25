@@ -9,8 +9,10 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.TagListDto;
 import com.hzy.domain.entity.Tag;
 import com.hzy.domain.vo.PageVo;
+import com.hzy.domain.vo.TagVo;
 import com.hzy.mapper.TagMapper;
 import com.hzy.service.TagService;
+import com.hzy.utils.BeanCopyUtils;
 import com.hzy.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -54,5 +56,15 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         updateById(tag);*/
         removeById(id);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getTagInfo(Long id) {
+
+        Tag tag = getById(id);
+
+        TagVo tagVo = BeanCopyUtils.copyBean(tag,TagVo.class);
+
+        return ResponseResult.okResult(tagVo);
     }
 }

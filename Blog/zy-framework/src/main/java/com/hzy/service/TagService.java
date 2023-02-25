@@ -38,5 +38,7 @@ public interface TagService extends IService<Tag> {
      * @return
      */
     ResponseResult deleteTagById(Long id);
+
+    ResponseResult getTagInfo(Long id);
 }
 
