@@ -5,6 +5,7 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,7 +63,7 @@ public class Menu  {
     private String remark;
     
     private String delFlag;
-
+    @TableField(exist = false)// 该字段在表中不存在
     private List<Menu> children;
 
 }
