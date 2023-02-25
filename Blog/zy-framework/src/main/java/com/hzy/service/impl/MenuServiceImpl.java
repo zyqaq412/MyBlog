@@ -61,8 +61,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     /**
      *  查出一级菜单，将子菜单赋值给children
      *  将查出的菜单转成树状
-     * @param menus
-     * @param parentId
+     * @param menus 菜单集合
+     * @param parentId 一级菜单id
      * @return
      */
     private List<Menu> builderMenuTree(List<Menu> menus, Long parentId) {
@@ -86,8 +86,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     /**
      *  获取子菜单
      * 获取存入参数的 子Menu集合
-     * @param menu
-     * @param menus
+     * @param menu 一级菜单
+     * @param menus 菜单集合
      * @return
      */
     private List<Menu> getChildren(Menu menu, List<Menu> menus) {
