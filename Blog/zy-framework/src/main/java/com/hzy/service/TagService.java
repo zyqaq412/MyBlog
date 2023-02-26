@@ -5,6 +5,9 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.TagListDto;
 import com.hzy.domain.entity.Tag;
 import com.hzy.domain.vo.PageVo;
+import com.hzy.domain.vo.TagVo;
+
+import java.util.List;
 
 
 /**
@@ -42,5 +45,7 @@ public interface TagService extends IService<Tag> {
     ResponseResult getTagInfo(Long id);
 
     ResponseResult updateTagInfo(Tag tag);
+
+    List<TagVo> listAllTag();
 }
 

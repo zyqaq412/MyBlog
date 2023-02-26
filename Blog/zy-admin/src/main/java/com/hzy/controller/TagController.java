@@ -4,9 +4,12 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.TagListDto;
 import com.hzy.domain.entity.Tag;
 import com.hzy.domain.vo.PageVo;
+import com.hzy.domain.vo.TagVo;
 import com.hzy.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @title: TagController
@@ -72,4 +75,15 @@ public class TagController {
     public ResponseResult updateTagInfo(@RequestBody Tag tag){
         return tagService.updateTagInfo(tag);
     }
+
+    /**
+     *  查询所有标签
+     * @return
+     */
+    @GetMapping("/listAllTag")
+    public ResponseResult listAllTag(){
+        List<TagVo> list = tagService.listAllTag();
+        return ResponseResult.okResult(list);
+    }
+
 }
