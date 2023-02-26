@@ -100,6 +100,26 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return ResponseResult.okResult(menuVo);
     }
 
+    @Override
+    public ResponseResult updateMenu(MenuDto menuDto) {
+        //        1.判断menuDto对象值是否为空
+        if (!StringUtils.hasText(menuDto.getMenuName()) ||
+                !StringUtils.hasText(menuDto.getMenuType()) ||
+                !StringUtils.hasText(String.valueOf(menuDto.getStatus())) ||
+                !StringUtils.hasText(menuDto.getPath()) ||
+                !StringUtils.hasText(String.valueOf(menuDto.getOrderNum())) ||
+                !StringUtils.hasText(menuDto.getIcon())) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.UPDATE_MENU_NULL);
+        }
+        if (menuDto.getId() == menuDto.getParentId()){
+            return ResponseResult.errorResult(AppHttpCodeEnum.UPDATE_MENU_CF);
+        }
+        //1.将MenuDto对象转化为Menu对象
+        Menu menu = BeanCopyUtils.copyBean(menuDto, Menu.class);
+        updateById(menu);
+        return ResponseResult.okResult();
+    }
+
     /**
      *  查出一级菜单，将子菜单赋值给children
      *  将查出的菜单转成树状

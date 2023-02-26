@@ -44,4 +44,14 @@ public class MenuController {
     public ResponseResult getMenuById(@PathVariable("id") Long id){
        return menuService.getMenuById(id);
     }
+
+    /**
+     *  更新菜单
+     * @param menuDto
+     * @return
+     */
+    @PutMapping
+    public ResponseResult updateMenu(@RequestBody MenuDto menuDto){
+        return menuService.updateMenu(menuDto);
+    }
 }
