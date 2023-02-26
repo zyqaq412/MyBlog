@@ -42,4 +42,9 @@ public class ArticleController {
     public ResponseResult getAllArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto) {
         return articleService.getAllArticleList(pageNum, pageSize, articleDto);
     }
+
+    @GetMapping("/{id}")
+    public ResponseResult getArticleById(@PathVariable("id") Long id) {
+        return articleService.getArticleById(id);
+    }
 }

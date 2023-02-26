@@ -177,12 +177,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<Article> page = new Page<>(pageNum, pageSize);
         page(page, queryWrapper);
 
-//        3.将当前页中的Article对象转换为ArticleDetailVo对象
+//        3.将当前页中的Article对象转换为ArticleDetailsVo对象
         List<Article> articles = page.getRecords();
-        List<ArticleDetailVo> articleDetailsVos = BeanCopyUtils.copyBeanList(articles, ArticleDetailVo.class);
+        List<ArticleDetailsVo> articleDetailsVos = BeanCopyUtils.copyBeanList(articles, ArticleDetailsVo.class);
 //        4.将LinkVo对象转换为LinkAdminVo对象
         AdminArticleVo adminArticleVo = new AdminArticleVo(articleDetailsVos, page.getTotal());
         return ResponseResult.okResult(adminArticleVo);
+    }
+
+    @Override
+    public ResponseResult getArticleById(Long id) {
+        Article article = getById(id);
+        UpdateArticleVo updateArticleVo = BeanCopyUtils.copyBean(article,UpdateArticleVo.class);
+        // 根据文章id获取到文章标签列表
+        List<Long> tagList = articleTagService.getTagList(id);
+        updateArticleVo.setTags(tagList);
+        return ResponseResult.okResult(updateArticleVo);
     }
 
 }

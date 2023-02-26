@@ -16,6 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminArticleVo {
-    private List<ArticleDetailVo> rows;
+    private List<ArticleDetailsVo> rows;
     private Long total;
 }
