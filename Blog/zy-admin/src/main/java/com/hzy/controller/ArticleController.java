@@ -2,7 +2,9 @@ package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.AddArticleDto;
+import com.hzy.domain.dto.AdminArticleDto;
 import com.hzy.domain.dto.ArticleDto;
+import com.hzy.domain.vo.UpdateArticleVo;
 import com.hzy.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +48,11 @@ public class ArticleController {
     @GetMapping("/{id}")
     public ResponseResult getArticleById(@PathVariable("id") Long id) {
         return articleService.getArticleById(id);
+    }
+
+    @PutMapping
+    public ResponseResult updateById(@RequestBody AdminArticleDto article){
+
+        return articleService.updateArticleInfo(article);
     }
 }

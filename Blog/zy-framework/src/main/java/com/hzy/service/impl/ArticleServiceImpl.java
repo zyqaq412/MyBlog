@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.AddArticleDto;
+import com.hzy.domain.dto.AdminArticleDto;
 import com.hzy.domain.dto.ArticleDto;
 import com.hzy.domain.entity.Article;
 import com.hzy.domain.entity.ArticleTag;
@@ -193,6 +194,26 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Long> tagList = articleTagService.getTagList(id);
         updateArticleVo.setTags(tagList);
         return ResponseResult.okResult(updateArticleVo);
+    }
+
+    @Override
+    public ResponseResult updateArticleInfo(AdminArticleDto adminArticleDto) {
+
+        // 1.将AdminArticleDto对象转换为Article对象
+        Article article = BeanCopyUtils.copyBean(adminArticleDto, Article.class);
+         //  2.将博客的标签信息存入标签表
+//          2.1根据当前博客id获取到已有的标签列表
+        List<Long> tagList = articleTagService.getTagList(article.getId());
+//          2.2得到修改过后的标签列表
+        List<Long> tags = article.getTags();
+//          2.3遍历修改过后的标签列表，判断当前博客是否已经有此标签，没有则一条数据添加到sg_article_tag表中
+        for (Long tag:tags){
+            if (!tagList.contains(tag)){
+                articleTagService.save(new ArticleTag(article.getId(), tag));
+            }
+        }
+        updateById(article);
+        return ResponseResult.okResult();
     }
 
 }

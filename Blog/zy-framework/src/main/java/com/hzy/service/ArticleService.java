@@ -3,8 +3,10 @@ package com.hzy.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.AddArticleDto;
+import com.hzy.domain.dto.AdminArticleDto;
 import com.hzy.domain.dto.ArticleDto;
 import com.hzy.domain.entity.Article;
+import com.hzy.domain.vo.UpdateArticleVo;
 
 import java.sql.Array;
 
@@ -60,4 +62,6 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     ResponseResult getArticleById(Long id);
+
+    ResponseResult updateArticleInfo(AdminArticleDto article);
 }

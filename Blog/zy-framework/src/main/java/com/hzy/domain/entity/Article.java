@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 文章表(Article)表实体类
@@ -59,6 +60,8 @@ public class Article  {
     @TableField(exist = false)// 该字段在表中不存在
     private String categoryName;
 
+    @TableField(exist = false)
+    private List<Long> tags;
     /**
      *  更新数据库浏览量时需要传递Article对象
      *  redis里面只有文章id和浏览量
