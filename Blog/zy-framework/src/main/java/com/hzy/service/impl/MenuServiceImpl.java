@@ -93,6 +93,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return ResponseResult.okResult();
     }
 
+    @Override
+    public ResponseResult getMenuById(Long id) {
+        Menu menu = getById(id);
+        MenuVo menuVo = BeanCopyUtils.copyBean(menu, MenuVo.class);
+        return ResponseResult.okResult(menuVo);
+    }
+
     /**
      *  查出一级菜单，将子菜单赋值给children
      *  将查出的菜单转成树状

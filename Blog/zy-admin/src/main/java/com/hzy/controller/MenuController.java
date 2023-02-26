@@ -4,10 +4,7 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.MenuDto;
 import com.hzy.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @title: MenuController
@@ -33,9 +30,18 @@ public class MenuController {
         return menuService.getMenuList(status,menuName);
     }
 
+    /**
+     *  添加菜单
+     * @param menuDto
+     * @return
+     */
     @PostMapping
     public ResponseResult addMenu(MenuDto menuDto){
         return menuService.addMenu(menuDto);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseResult getMenuById(@PathVariable("id") Long id){
+       return menuService.getMenuById(id);
     }
 }

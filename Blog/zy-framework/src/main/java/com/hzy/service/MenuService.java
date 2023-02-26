@@ -35,5 +35,7 @@ public interface MenuService extends IService<Menu> {
     ResponseResult getMenuList(String status, String menuName);
 
     ResponseResult addMenu(MenuDto menuDto);
+
+    ResponseResult getMenuById(Long id);
 }
 
