@@ -6,13 +6,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.AddArticleDto;
+import com.hzy.domain.dto.ArticleDto;
 import com.hzy.domain.entity.Article;
 import com.hzy.domain.entity.ArticleTag;
 import com.hzy.domain.entity.Category;
-import com.hzy.domain.vo.ArticleDetailVo;
-import com.hzy.domain.vo.ArticleListVo;
-import com.hzy.domain.vo.HotArticleVo;
-import com.hzy.domain.vo.PageVo;
+import com.hzy.domain.vo.*;
 import com.hzy.mapper.ArticleMapper;
 import com.hzy.service.ArticleService;
 import com.hzy.service.ArticleTagService;
@@ -22,6 +20,7 @@ import com.hzy.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -164,6 +163,26 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //添加 博客和标签的关联
         articleTagService.saveBatch(articleTags);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getAllArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto) {
+//        1.根据文章标题(模糊查询)和摘要进行查询
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(articleDto.getTitle()), Article::getTitle, articleDto.getTitle());
+        queryWrapper.like(StringUtils.hasText(articleDto.getSummary()), Article::getSummary, articleDto.getSummary());
+//        2.规定文章是未发布状态不能显示
+        queryWrapper.eq(Article::getStatus,SystemConstants.ARTICLE_STATUS_NORMAL);
+//        3.分页查询
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        page(page, queryWrapper);
+
+//        3.将当前页中的Article对象转换为ArticleDetailVo对象
+        List<Article> articles = page.getRecords();
+        List<ArticleDetailVo> articleDetailsVos = BeanCopyUtils.copyBeanList(articles, ArticleDetailVo.class);
+//        4.将LinkVo对象转换为LinkAdminVo对象
+        AdminArticleVo adminArticleVo = new AdminArticleVo(articleDetailsVos, page.getTotal());
+        return ResponseResult.okResult(adminArticleVo);
     }
 
 }

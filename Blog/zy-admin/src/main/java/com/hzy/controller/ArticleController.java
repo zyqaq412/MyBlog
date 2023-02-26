@@ -2,12 +2,10 @@ package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.AddArticleDto;
+import com.hzy.domain.dto.ArticleDto;
 import com.hzy.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @title: ArticleController
@@ -32,5 +30,16 @@ public class ArticleController {
         return articleService.add(article);
     }
 
-
+    /**
+     * 查询博客列表
+     *
+     * @param pageNum    页面num
+     * @param pageSize   页面大小
+     * @param articleDto 文章dto
+     * @return {@link ResponseResult}
+     */
+    @GetMapping("/list")
+    public ResponseResult getAllArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto) {
+        return articleService.getAllArticleList(pageNum, pageSize, articleDto);
+    }
 }
