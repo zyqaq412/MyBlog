@@ -45,14 +45,29 @@ public class ArticleController {
         return articleService.getAllArticleList(pageNum, pageSize, articleDto);
     }
 
+    /**
+     *  修改文章：根据id获取文章详情
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseResult getArticleById(@PathVariable("id") Long id) {
         return articleService.getArticleById(id);
     }
 
+    /**
+     *  修改文章: 更新文章
+     * @param article
+     * @return
+     */
     @PutMapping
-    public ResponseResult updateById(@RequestBody AdminArticleDto article){
+    public ResponseResult updateArticleById(@RequestBody AdminArticleDto article){
 
         return articleService.updateArticleInfo(article);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseResult deleteArticleById(@PathVariable("id") Long id){
+        return articleService.deleteArticleById(id);
     }
 }

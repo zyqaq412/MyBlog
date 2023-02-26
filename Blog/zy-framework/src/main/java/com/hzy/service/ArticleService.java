@@ -64,4 +64,6 @@ public interface ArticleService extends IService<Article> {
     ResponseResult getArticleById(Long id);
 
     ResponseResult updateArticleInfo(AdminArticleDto article);
+
+    ResponseResult deleteArticleById(Long id);
 }
