@@ -32,13 +32,10 @@ public class WebUtils
     }
 
 
-    public static void setDownLoadHeader(String filename, ServletContext context, HttpServletResponse response) throws UnsupportedEncodingException {
-        String mimeType = context.getMimeType(filename);//获取文件的mime类型
-        response.setHeader("content-type",mimeType);
-        String fname= URLEncoder.encode(filename,"UTF-8");
+    public static void setDownLoadHeader(String filename, HttpServletResponse response) throws UnsupportedEncodingException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fname= URLEncoder.encode(filename,"UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition","attachment; filename="+fname);
-
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//        response.setCharacterEncoding("utf-8");
     }
 }
