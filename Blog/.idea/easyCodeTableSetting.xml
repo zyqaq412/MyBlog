@@ -414,6 +414,37 @@
             </TableInfoDTO>
           </value>
         </entry>
+        <entry key="zy_blog.zy_article_tag">
+          <value>
+            <TableInfoDTO>
+              <option name="comment" value="文章标签关联表" />
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="文章id" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="articleId" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="标签id" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="tagId" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="ZyArticleTag" />
+              <option name="preName" value="zy_" />
+              <option name="saveModelName" value="zy-framework" />
+              <option name="savePackageName" value="" />
+              <option name="savePath" value="./zy-framework/src/main/java" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
         <entry key="zy_blog.zy_category">
           <value>
             <TableInfoDTO>
