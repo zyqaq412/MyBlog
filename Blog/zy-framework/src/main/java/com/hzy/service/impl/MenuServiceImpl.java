@@ -120,6 +120,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return ResponseResult.okResult();
     }
 
+    @Override
+    public ResponseResult deleteMenuById(Long id) {
+        removeById(id);
+        return ResponseResult.okResult();
+    }
+
     /**
      *  查出一级菜单，将子菜单赋值给children
      *  将查出的菜单转成树状

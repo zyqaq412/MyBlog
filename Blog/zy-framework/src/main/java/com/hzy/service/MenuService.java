@@ -39,5 +39,8 @@ public interface MenuService extends IService<Menu> {
     ResponseResult getMenuById(Long id);
 
     ResponseResult updateMenu(MenuDto menuDto);
+
+
+    ResponseResult deleteMenuById(Long id);
 }
 
