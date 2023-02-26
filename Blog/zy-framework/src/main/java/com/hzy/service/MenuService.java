@@ -2,6 +2,7 @@ package com.hzy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.MenuDto;
 import com.hzy.domain.entity.Menu;
 
 import java.util.List;
@@ -32,5 +33,7 @@ public interface MenuService extends IService<Menu> {
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
 
     ResponseResult getMenuList(String status, String menuName);
+
+    ResponseResult addMenu(MenuDto menuDto);
 }
 

@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.MenuDto;
 import com.hzy.domain.entity.Menu;
 import com.hzy.domain.vo.MenuVo;
+import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.mapper.MenuMapper;
 import com.hzy.service.MenuService;
 import com.hzy.utils.BeanCopyUtils;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -73,6 +76,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 //        2.将List<Menu>对象转换为List<MenuVo>对象
         List<MenuVo> menuVos = BeanCopyUtils.copyBeanList(menus, MenuVo.class);
         return ResponseResult.okResult(menuVos);
+    }
+
+    @Override
+    public ResponseResult addMenu(MenuDto menuDto) {
+        //        1.将MenuDto对象转换为Menu对象
+        Menu menu = BeanCopyUtils.copyBean(menuDto, Menu.class);
+//        2.根据MenuName判断当前是否存在menu
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getMenuName, menu.getMenuName());
+        Menu oneMenu = getOne(queryWrapper);
+        if (!Objects.isNull(oneMenu)) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.ADD_MENU_FAIL);
+        }
+        save(menu);
+        return ResponseResult.okResult();
     }
 
     /**

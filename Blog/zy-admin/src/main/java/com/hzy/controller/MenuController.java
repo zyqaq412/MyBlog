@@ -1,9 +1,11 @@
 package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.MenuDto;
 import com.hzy.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,4 +33,9 @@ public class MenuController {
         return menuService.getMenuList(status,menuName);
     }
 
+    @PostMapping
+    public ResponseResult addMenu(MenuDto menuDto){
+        return menuService.addMenu(menuDto);
+
+    }
 }
