@@ -3,11 +3,15 @@ package com.hzy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.constants.SystemConstants;
+import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.Menu;
+import com.hzy.domain.vo.MenuVo;
 import com.hzy.mapper.MenuMapper;
 import com.hzy.service.MenuService;
+import com.hzy.utils.BeanCopyUtils;
 import com.hzy.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.function.Function;
@@ -56,6 +60,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //先找出第一层的菜单  然后去找他们的子菜单设置到children属性中
         List<Menu> menuTree = builderMenuTree(menus,0L);
         return menuTree;
+    }
+
+    @Override
+    public ResponseResult getMenuList(String status, String menuName) {
+        //        1.根据menu状态和menuName查询
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.hasText(status), Menu::getStatus, status)
+                .like(StringUtils.hasText(menuName), Menu::getMenuName, menuName)
+                .orderByAsc(Menu::getParentId, Menu::getOrderNum);
+        List<Menu> menus = list(queryWrapper);
+//        2.将List<Menu>对象转换为List<MenuVo>对象
+        List<MenuVo> menuVos = BeanCopyUtils.copyBeanList(menus, MenuVo.class);
+        return ResponseResult.okResult(menuVos);
     }
 
     /**
