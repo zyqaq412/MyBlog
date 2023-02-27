@@ -1,7 +1,10 @@
 package com.hzy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.RoleDto;
 import com.hzy.domain.entity.Role;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -22,5 +25,8 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     List<String> selectRoleKeyByUserId(Long id);
+
+
+    ResponseResult pageRoleList(Integer pageNum, Integer pageSize, RoleDto roleDto);
 }
 
