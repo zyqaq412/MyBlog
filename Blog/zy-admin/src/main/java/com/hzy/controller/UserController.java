@@ -5,9 +5,12 @@ import com.hzy.domain.entity.User;
 import com.hzy.exception.SystemException;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.service.UserService;
+import com.hzy.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @title: UserController
@@ -46,5 +49,16 @@ public class UserController {
             throw new SystemException(AppHttpCodeEnum.EMAIL_EXIST);
         }
         return userService.addUser(user);
+    }
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/{userIds}")
+    public ResponseResult remove(@PathVariable List<Long> userIds) {
+        if(userIds.contains(SecurityUtils.getUserId())){
+            return ResponseResult.errorResult(500,"不能删除当前你正在使用的用户");
+        }
+        userService.removeByIds(userIds);
+        return ResponseResult.okResult();
     }
 }
