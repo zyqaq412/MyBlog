@@ -37,4 +37,9 @@ public class LinkController {
 
         return ResponseResult.okResult(linkService.getById(id));
     }
+    @PutMapping
+    public ResponseResult edit(@RequestBody Link link){
+        linkService.updateById(link);
+        return ResponseResult.okResult();
+    }
 }
