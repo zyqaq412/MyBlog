@@ -8,6 +8,8 @@ import com.hzy.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @title: RoleController
  * @Author zxwyhzy
@@ -73,5 +75,16 @@ public class RoleController {
 
         return roleService.updateRole(role);
     }
+
+    /**
+     *  新增用户：查询所有角色
+     * @return
+     */
+    @GetMapping("/listAllRole")
+    public ResponseResult listAllRole(){
+        List<Role> roles = roleService.selectRoleAll();
+        return ResponseResult.okResult(roles);
+    }
+
 
 }

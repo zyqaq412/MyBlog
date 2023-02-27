@@ -55,5 +55,7 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     ResponseResult updateRole(Role role);
+
+    List<Role> selectRoleAll();
 }
 
