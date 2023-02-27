@@ -1,16 +1,19 @@
 package com.hzy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.User;
+import com.hzy.domain.entity.UserRole;
 import com.hzy.domain.vo.PageVo;
 import com.hzy.domain.vo.UserInfoVo;
 import com.hzy.domain.vo.UserVo;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.exception.SystemException;
 import com.hzy.mapper.UserMapper;
+import com.hzy.service.UserRoleService;
 import com.hzy.service.UserService;
 import com.hzy.utils.BeanCopyUtils;
 import com.hzy.utils.SecurityUtils;
@@ -19,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +37,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * 根据当前登录用户id查询用户数据库信息
@@ -118,6 +124,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         pageVo.setTotal(page.getTotal());
         pageVo.setRows(userVoList);
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public boolean checkUserNameUnique(String userName) {
+        return count(Wrappers.<User>lambdaQuery().eq(User::getUserName,userName))==0;
+    }
+
+    @Override
+    public boolean checkPhoneUnique(User user) {
+        return count(Wrappers.<User>lambdaQuery().eq(User::getPhonenumber,user.getPhonenumber()))==0;
+    }
+
+    @Override
+    public boolean checkEmailUnique(User user) {
+        return count(Wrappers.<User>lambdaQuery().eq(User::getEmail,user.getEmail()))==0;
+    }
+
+    @Override
+    public ResponseResult addUser(User user) {
+        //密码加密处理
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        save(user);
+
+        if(user.getRoleIds()!=null&&user.getRoleIds().length>0){
+            insertUserRole(user);
+        }
+        return ResponseResult.okResult();
+    }
+
+    private void insertUserRole(User user) {
+        List<UserRole> sysUserRoles = Arrays.stream(user.getRoleIds())
+                .map(roleId -> new UserRole(user.getId(), roleId)).collect(Collectors.toList());
+        userRoleService.saveBatch(sysUserRoles);
     }
 
     /**
