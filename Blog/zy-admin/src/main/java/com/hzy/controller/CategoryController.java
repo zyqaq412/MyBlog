@@ -6,6 +6,7 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.entity.Category;
 import com.hzy.domain.vo.CategoryVo;
 import com.hzy.domain.vo.ExcelCategoryVo;
+import com.hzy.domain.vo.PageVo;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.service.CategoryService;
 import com.hzy.utils.BeanCopyUtils;
@@ -32,7 +33,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     *  查询所有分类
+     *  写博客：查询所有分类
      * @return
      */
     @GetMapping("/listAllCategory")
@@ -64,5 +65,13 @@ public class CategoryController {
             ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
             WebUtils.renderString(response, JSON.toJSONString(result));
         }
+    }
+    /**
+     * 获取分类列表
+     */
+    @GetMapping("/list")
+    public ResponseResult list(Category category, Integer pageNum, Integer pageSize) {
+        PageVo pageVo = categoryService.selectCategoryPage(category,pageNum,pageSize);
+        return ResponseResult.okResult(pageVo);
     }
 }
