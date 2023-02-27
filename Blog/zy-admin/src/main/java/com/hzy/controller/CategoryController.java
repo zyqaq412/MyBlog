@@ -77,4 +77,26 @@ public class CategoryController {
         categoryService.save(category);
         return ResponseResult.okResult();
     }
+
+    /**
+     *  修改分类：根据id获取分类详情
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}")
+    public ResponseResult getInfo(@PathVariable(value = "id")Long id){
+        Category category = categoryService.getById(id);
+        return ResponseResult.okResult(category);
+    }
+
+    /**
+     *  修改分类：更新
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public ResponseResult edit(@RequestBody Category category){
+        categoryService.updateById(category);
+        return ResponseResult.okResult();
+    }
 }
