@@ -33,4 +33,10 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return
      */
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
+    /**
+     *  修改角色 根据id查符合要求的菜单
+     * @param roleId
+     * @return
+     */
+    List<Long> selectMenuListByRoleId(Long roleId);
 }

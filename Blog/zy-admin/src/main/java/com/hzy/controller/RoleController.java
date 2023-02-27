@@ -44,10 +44,25 @@ public class RoleController {
     public ResponseResult updateStatusById(@RequestBody UpdateRoleDto updateRoleDto){
         return roleService.updateStatusById(updateRoleDto);
     }
+
+    /**
+     *  添加角色
+     * @param role
+     * @return
+     */
     @PostMapping
     public ResponseResult addRole(@RequestBody Role role){
         return roleService.addRole(role);
 
+    }
+    /**
+     * 修改角色：根据角色编号获取详细信息
+     */
+    @GetMapping(value = "/{roleId}")
+    public ResponseResult getInfo(@PathVariable Long roleId)
+    {
+        Role role = roleService.getById(roleId);
+        return ResponseResult.okResult(role);
     }
 
 }

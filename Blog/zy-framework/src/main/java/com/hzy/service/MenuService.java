@@ -31,18 +31,61 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
-
+    /**
+     *  查询菜单
+     * @param status 状态
+     * @param menuName 菜单名
+     * @return
+     */
     ResponseResult getMenuList(String status, String menuName);
 
+    /**
+     *  添加菜单
+     * @param menuDto
+     * @return
+     */
     ResponseResult addMenu(MenuDto menuDto);
 
+    /**
+     *  修改菜单：根据id获取菜单详情
+     * @param id
+     * @return
+     */
     ResponseResult getMenuById(Long id);
 
+    /**
+     *  修改菜单： 更新菜单
+     * @param menuDto
+     * @return
+     */
     ResponseResult updateMenu(MenuDto menuDto);
 
 
+    /**
+     *  根据id删除菜单
+     * @param id
+     * @return
+     */
     ResponseResult deleteMenuById(Long id);
 
+    /**
+     *  添加角色：获取菜单树
+     * @return
+     */
     ResponseResult getMenuTree();
+
+    /**
+     *  修改角色 获取菜单树
+     * @param menu
+     * @return
+     */
+    List<Menu> selectMenuList(Menu menu);
+
+    /**
+     *  修改角色 获取角色所关联的菜单权限id列表
+     * @param roleId
+     * @return
+     */
+    List<Long> selectMenuListByRoleId(Long roleId);
 }
 

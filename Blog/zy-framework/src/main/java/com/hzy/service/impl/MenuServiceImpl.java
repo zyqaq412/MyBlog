@@ -136,6 +136,23 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return ResponseResult.okResult(menuTreeVos);
     }
 
+    @Override
+    public List<Menu> selectMenuList(Menu menu) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        //menuName模糊查询
+        queryWrapper.like(StringUtils.hasText(menu.getMenuName()),Menu::getMenuName,menu.getMenuName());
+        queryWrapper.eq(StringUtils.hasText(menu.getStatus()),Menu::getStatus,menu.getStatus());
+        //排序 parent_id和order_num
+        queryWrapper.orderByAsc(Menu::getParentId,Menu::getOrderNum);
+        List<Menu> menus = list(queryWrapper);;
+        return menus;
+    }
+
+    @Override
+    public List<Long> selectMenuListByRoleId(Long roleId) {
+        return getBaseMapper().selectMenuListByRoleId(roleId);
+    }
+
     /**
      *  查出一级菜单，将子菜单赋值给children
      *  将查出的菜单转成树状

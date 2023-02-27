@@ -2,9 +2,15 @@ package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.MenuDto;
+import com.hzy.domain.entity.Menu;
+import com.hzy.domain.vo.MenuTreeVo;
+import com.hzy.domain.vo.RoleMenuTreeSelectVo;
 import com.hzy.service.MenuService;
+import com.hzy.utils.SystemConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @title: MenuController
@@ -60,8 +66,23 @@ public class MenuController {
        return  menuService.deleteMenuById(id);
     }
 
+    /**
+     *  获取菜单树
+     * @return
+     */
     @GetMapping("/treeselect")
     public ResponseResult getMenuTree(){
        return menuService.getMenuTree();
+    }
+    /**
+     * 加载对应角色菜单列表树
+     */
+    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
+    public ResponseResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
+        List<Menu> menus = menuService.selectMenuList(new Menu());
+        List<Long> checkedKeys = menuService.selectMenuListByRoleId(roleId);
+        List<MenuTreeVo> menuTreeVos = SystemConverter.buildMenuSelectTree(menus);
+        RoleMenuTreeSelectVo vo = new RoleMenuTreeSelectVo(checkedKeys,menuTreeVos);
+        return ResponseResult.okResult(vo);
     }
 }
