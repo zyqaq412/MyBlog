@@ -33,8 +33,15 @@ public class RoleController {
         return roleService.pageRoleList(pageNum,pageSize,roleDto);
     }
 
+    /**
+     *  改变角色状态
+     * @param updateRoleDto
+     * @return
+     */
+
     @PutMapping("/changeStatus")
     public ResponseResult updateStatusById(@RequestBody UpdateRoleDto updateRoleDto){
         return roleService.updateStatusById(updateRoleDto);
     }
+
 }

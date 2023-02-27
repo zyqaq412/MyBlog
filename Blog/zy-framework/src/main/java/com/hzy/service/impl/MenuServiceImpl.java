@@ -6,12 +6,14 @@ import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.MenuDto;
 import com.hzy.domain.entity.Menu;
+import com.hzy.domain.vo.MenuTreeVo;
 import com.hzy.domain.vo.MenuVo;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.mapper.MenuMapper;
 import com.hzy.service.MenuService;
 import com.hzy.utils.BeanCopyUtils;
 import com.hzy.utils.SecurityUtils;
+import com.hzy.utils.SystemConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -124,6 +126,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public ResponseResult deleteMenuById(Long id) {
         removeById(id);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getMenuTree() {
+        MenuMapper menuMapper = getBaseMapper();
+        List<Menu> menus = menuMapper.selectAllRouterMenu();
+        List<MenuTreeVo> menuTreeVos =  SystemConverter.buildMenuSelectTree(menus);
+        return ResponseResult.okResult(menuTreeVos);
     }
 
     /**
