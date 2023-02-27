@@ -43,5 +43,7 @@ public interface UserService extends IService<User> {
     boolean checkEmailUnique(User user);
 
     ResponseResult addUser(User user);
+
+    void updateUser(User user);
 }
 

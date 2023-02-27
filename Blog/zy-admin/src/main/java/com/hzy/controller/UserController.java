@@ -80,4 +80,13 @@ public class UserController {
         UserInfoAndRoleIdsVo vo = new UserInfoAndRoleIdsVo(user,roles,roleIds);
         return ResponseResult.okResult(vo);
     }
+
+    /**
+     * 修改用户
+     */
+    @PutMapping
+    public ResponseResult edit(@RequestBody User user) {
+        userService.updateUser(user);
+        return ResponseResult.okResult();
+    }
 }

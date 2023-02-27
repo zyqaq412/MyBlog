@@ -153,6 +153,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return ResponseResult.okResult();
     }
 
+    @Override
+    public void updateUser(User user) {
+        // 删除用户与角色关联
+        LambdaQueryWrapper<UserRole> userRoleUpdateWrapper = new LambdaQueryWrapper<>();
+        userRoleUpdateWrapper.eq(UserRole::getUserId,user.getId());
+        userRoleService.remove(userRoleUpdateWrapper);
+
+        // 新增用户与角色管理
+        insertUserRole(user);
+        // 更新用户信息
+        updateById(user);
+    }
+
     private void insertUserRole(User user) {
         List<UserRole> sysUserRoles = Arrays.stream(user.getRoleIds())
                 .map(roleId -> new UserRole(user.getId(), roleId)).collect(Collectors.toList());
