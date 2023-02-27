@@ -19,6 +19,8 @@ import com.hzy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,8 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Autowired
     private RoleMenuService roleMenuService;
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public List<String> selectRoleKeyByUserId(Long id) {
@@ -109,5 +113,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 .map(memuId -> new RoleMenu(role.getId(), memuId))
                 .collect(Collectors.toList());
         roleMenuService.saveBatch(roleMenuList);
+    }
+    /**
+     * 删除角色
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    public ResponseResult remove(@PathVariable(name = "id") Long id) {
+        roleService.removeById(id);
+        return ResponseResult.okResult();
     }
 }
