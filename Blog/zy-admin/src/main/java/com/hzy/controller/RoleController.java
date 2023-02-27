@@ -3,6 +3,7 @@ package com.hzy.controller;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.RoleDto;
 import com.hzy.domain.dto.UpdateRoleDto;
+import com.hzy.domain.entity.Role;
 import com.hzy.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,11 @@ public class RoleController {
     @PutMapping("/changeStatus")
     public ResponseResult updateStatusById(@RequestBody UpdateRoleDto updateRoleDto){
         return roleService.updateStatusById(updateRoleDto);
+    }
+    @PostMapping
+    public ResponseResult addRole(@RequestBody Role role){
+        return roleService.addRole(role);
+
     }
 
 }

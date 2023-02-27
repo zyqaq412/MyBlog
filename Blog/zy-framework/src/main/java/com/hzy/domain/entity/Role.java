@@ -3,6 +3,9 @@ package com.hzy.domain.entity;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,7 +46,8 @@ public class Role  {
     private Date updateTime;
     //备注
     private String remark;
-
+    @TableField(exist = false)
+    private Long[] menuIds;
 
 
 }

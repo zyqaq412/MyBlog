@@ -5,7 +5,6 @@ import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.RoleDto;
 import com.hzy.domain.dto.UpdateRoleDto;
 import com.hzy.domain.entity.Role;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,5 +30,7 @@ public interface RoleService extends IService<Role> {
     ResponseResult pageRoleList(Integer pageNum, Integer pageSize, RoleDto roleDto);
 
     ResponseResult updateStatusById(UpdateRoleDto updateRoleDto);
+
+    ResponseResult addRole(Role role);
 }
 
