@@ -47,4 +47,15 @@ public class LinkController {
         linkService.removeById(id);
         return ResponseResult.okResult();
     }
+
+    /**
+     *  审核
+     * @param link
+     * @return
+     */
+    @PutMapping("/changeLinkStatus")
+    public ResponseResult changeLinkStatus(@RequestBody Link link){
+        linkService.updateById(link);
+        return ResponseResult.okResult();
+    }
 }
