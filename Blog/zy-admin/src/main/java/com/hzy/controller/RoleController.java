@@ -64,5 +64,14 @@ public class RoleController {
         Role role = roleService.getById(roleId);
         return ResponseResult.okResult(role);
     }
+    /**
+     * 修改角色：更新角色
+     */
+    @PutMapping
+    public ResponseResult edit(@RequestBody Role role)
+    {
+
+        return roleService.updateRole(role);
+    }
 
 }

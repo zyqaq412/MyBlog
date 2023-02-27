@@ -12,5 +12,10 @@ import com.hzy.domain.entity.RoleMenu;
  */
 public interface RoleMenuService extends IService<RoleMenu> {
 
+    /**
+     *  根据角色id 删除角色菜单关联表的数据
+     * @param id
+     */
+    void deleteRoleMenuByRoleId(Long id);
 }
 

@@ -1,5 +1,6 @@
 package com.hzy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.domain.entity.RoleMenu;
 import com.hzy.mapper.RoleMenuMapper;
@@ -15,4 +16,14 @@ import org.springframework.stereotype.Service;
 @Service("roleMenuService")
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements RoleMenuService {
 
+    /**
+     *  根据角色id 删除角色菜单关联表的数据
+     * @param id
+     */
+    @Override
+    public void deleteRoleMenuByRoleId(Long id) {
+        LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RoleMenu::getRoleId,id);
+        remove(queryWrapper);
+    }
 }

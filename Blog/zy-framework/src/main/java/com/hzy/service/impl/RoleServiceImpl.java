@@ -10,6 +10,7 @@ import com.hzy.domain.entity.Role;
 import com.hzy.domain.entity.RoleMenu;
 import com.hzy.domain.vo.AdminRoleVo;
 import com.hzy.domain.vo.RoleVo;
+import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.mapper.RoleMapper;
 import com.hzy.service.RoleMenuService;
 import com.hzy.service.RoleService;
@@ -84,6 +85,25 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         }
         return ResponseResult.okResult();
     }
+
+    @Override
+    public ResponseResult updateRole(Role role) {
+        if (!StringUtils.hasText(role.getRoleName())
+        ||!StringUtils.hasText(role.getRoleKey())
+        ||!StringUtils.hasText(String.valueOf(role.getRoleSort()))){
+            return ResponseResult.errorResult(AppHttpCodeEnum.UPDATE_MENU_NULL);
+        }
+        updateById(role);
+        // 删除角色菜单关联表的数据重新插入
+        roleMenuService.deleteRoleMenuByRoleId(role.getId());
+        insertRoleMenu(role);
+        return ResponseResult.okResult();
+    }
+
+    /**
+     *  角色与菜单关联表插入数据
+     * @param role
+     */
     private void insertRoleMenu(Role role) {
         List<RoleMenu> roleMenuList = Arrays.stream(role.getMenuIds())
                 .map(memuId -> new RoleMenu(role.getId(), memuId))

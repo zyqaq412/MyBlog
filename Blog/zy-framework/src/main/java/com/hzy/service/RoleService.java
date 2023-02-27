@@ -26,11 +26,34 @@ public interface RoleService extends IService<Role> {
      */
     List<String> selectRoleKeyByUserId(Long id);
 
-
+    /**
+     *  分页查询角色泪飙
+     * @param pageNum
+     * @param pageSize
+     * @param roleDto
+     * @return
+     */
     ResponseResult pageRoleList(Integer pageNum, Integer pageSize, RoleDto roleDto);
 
+    /**
+     *  更新角色状态
+     * @param updateRoleDto
+     * @return
+     */
     ResponseResult updateStatusById(UpdateRoleDto updateRoleDto);
 
+    /**
+     *  新增角色
+     * @param role
+     * @return
+     */
     ResponseResult addRole(Role role);
+
+    /**
+     *  更新角色
+     * @param role
+     * @return
+     */
+    ResponseResult updateRole(Role role);
 }
 
