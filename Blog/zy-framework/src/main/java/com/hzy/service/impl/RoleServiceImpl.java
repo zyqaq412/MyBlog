@@ -1,10 +1,12 @@
 package com.hzy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.domain.ResponseResult;
 import com.hzy.domain.dto.RoleDto;
+import com.hzy.domain.dto.UpdateRoleDto;
 import com.hzy.domain.entity.Article;
 import com.hzy.domain.entity.Role;
 import com.hzy.domain.vo.AdminRoleVo;
@@ -59,5 +61,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         // 4.将LinkVo对象转换为LinkAdminVo对象
         AdminRoleVo adminRoleVo = new AdminRoleVo(roleVos, page.getTotal());
         return ResponseResult.okResult(adminRoleVo);
+    }
+
+    @Override
+    public ResponseResult updateStatusById(UpdateRoleDto updateRoleDto) {
+        Role role = new Role();
+        role.setId(Long.valueOf(updateRoleDto.getRoleId()));
+        role.setStatus(String.valueOf(updateRoleDto.getStatus()));
+        updateById(role);
+        return ResponseResult.okResult();
     }
 }
