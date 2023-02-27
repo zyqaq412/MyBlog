@@ -5,9 +5,7 @@ import com.hzy.domain.entity.Link;
 import com.hzy.domain.vo.PageVo;
 import com.hzy.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @title: LinkController
@@ -21,12 +19,17 @@ public class LinkController {
     @Autowired
     private LinkService linkService;
     /**
-     * 获取友链列表
+     * 分页友链列表
      */
     @GetMapping("/list")
     public ResponseResult list(Link link, Integer pageNum, Integer pageSize)
     {
         PageVo pageVo = linkService.selectLinkPage(link,pageNum,pageSize);
         return ResponseResult.okResult(pageVo);
+    }
+    @PostMapping
+    public ResponseResult add(@RequestBody Link link){
+        linkService.save(link);
+        return ResponseResult.okResult();
     }
 }
