@@ -32,4 +32,9 @@ public class LinkController {
         linkService.save(link);
         return ResponseResult.okResult();
     }
+    @GetMapping("{id}")
+    public ResponseResult getLinkById(@PathVariable Long id){
+
+        return ResponseResult.okResult(linkService.getById(id));
+    }
 }
