@@ -57,5 +57,7 @@ public interface RoleService extends IService<Role> {
     ResponseResult updateRole(Role role);
 
     List<Role> selectRoleAll();
+
+    List<Long> selectRoleIdByUserId(Long userId);
 }
 

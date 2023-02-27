@@ -111,6 +111,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return list(Wrappers.<Role>lambdaQuery().eq(Role::getStatus, SystemConstants.NORMAL));
     }
 
+    @Override
+    public List<Long> selectRoleIdByUserId(Long userId) {
+        return getBaseMapper().selectRoleIdByUserId(userId);
+    }
+
     /**
      *  角色与菜单关联表插入数据
      * @param role

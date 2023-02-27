@@ -20,4 +20,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @return
      */
     List<String> selectRoleKeyByUserId(Long id);
+
+    List<Long> selectRoleIdByUserId(Long userId);
 }

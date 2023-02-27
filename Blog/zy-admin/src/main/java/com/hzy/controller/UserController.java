@@ -1,9 +1,12 @@
 package com.hzy.controller;
 
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.entity.Role;
 import com.hzy.domain.entity.User;
+import com.hzy.domain.vo.UserInfoAndRoleIdsVo;
 import com.hzy.exception.SystemException;
 import com.hzy.enums.AppHttpCodeEnum;
+import com.hzy.service.RoleService;
 import com.hzy.service.UserService;
 import com.hzy.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
     /**
      * 获取用户列表
      */
@@ -60,5 +65,19 @@ public class UserController {
         }
         userService.removeByIds(userIds);
         return ResponseResult.okResult();
+    }
+    /**
+     * 修改用户：根据用户编号获取详细信息
+     */
+    @GetMapping(value = { "/{userId}" })
+    public ResponseResult getUserInfoAndRoleIds(@PathVariable(value = "userId") Long userId)
+    {
+        List<Role> roles = roleService.selectRoleAll();
+        User user = userService.getById(userId);
+        //当前用户所具有的角色id列表
+        List<Long> roleIds = roleService.selectRoleIdByUserId(userId);
+
+        UserInfoAndRoleIdsVo vo = new UserInfoAndRoleIdsVo(user,roles,roleIds);
+        return ResponseResult.okResult(vo);
     }
 }
