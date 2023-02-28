@@ -87,4 +87,14 @@ public class RoleController {
     }
 
 
+    /**
+     * 删除角色
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    public ResponseResult remove(@PathVariable(name = "id") Long id) {
+        roleService.removeById(id);
+        return ResponseResult.okResult();
+    }
+
 }

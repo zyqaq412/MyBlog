@@ -12,7 +12,7 @@ public class articlesTest {
     @Test
     public void testBCryptPasswordEncoder(){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encode = passwordEncoder.encode("123");
+        String encode = passwordEncoder.encode("test");
         System.out.println(encode);//$2a$10$thltlvKtDb4SAth6C5z3E.zPmSDYRp4LNXb1R0aJ15L.iyFlPMK3i
         System.out.println(passwordEncoder
                 .matches("123",
