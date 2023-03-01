@@ -124,8 +124,16 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                 commentVo.setUsername("游客");
             }else {
                 //通过creatyBy查询用户的昵称并赋值
-                String nickName = userService.getById(commentVo.getCreateBy()).getNickName();
-                commentVo.setUsername(nickName);
+                // 添加try catch 预防用户被删除查询昵称失败
+                try {
+                    String nickName =
+                            userService.getById(commentVo.getCreateBy()).getNickName();
+                    commentVo.setUsername(nickName);
+                }catch (Exception e){
+                    commentVo.setUsername("已注销用户");
+                }
+
+
             }
 
             //通过toCommentUserId查询用户的昵称并赋值
