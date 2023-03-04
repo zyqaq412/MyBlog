@@ -17,6 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentVo {
+
+    // 头像地址
+    private String avatar;
     private Long id;
     //文章id
     private Long articleId;

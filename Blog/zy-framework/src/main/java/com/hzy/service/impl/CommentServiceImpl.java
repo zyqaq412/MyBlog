@@ -49,6 +49,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         page(page,queryWrapper);
 
         List<CommentVo> commentVoList = toCommentVoList(page.getRecords());
+        for (CommentVo vo : commentVoList) {
+            // 添加头像路径
+            if (null == userService.getById(vo.getCreateBy())){
+                vo.setAvatar("http://rqiojt6a0.hn-bkt.clouddn.com/2023/03/04/2f85e288daba43aeb35f886e2294ed89.png");
+            }else if (null == userService.getById(vo.getCreateBy()).getAvatar()){
+                vo.setAvatar("http://rqiojt6a0.hn-bkt.clouddn.com/2023/03/04/b2c341da7b674917bb079fc5648b5af6.png");
+            }else {
+                vo.setAvatar(userService.getById(vo.getCreateBy()).getAvatar());
+            }
+
+        }
 
         //查询所有根评论对应的子评论集合，并且赋值给对应的属性
         for (CommentVo commentVo : commentVoList) {
@@ -112,6 +123,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         queryWrapper.orderByAsc(Comment::getCreateTime);
         List<Comment> comments = list(queryWrapper);
         List<CommentVo> commentVos = toCommentVoList(comments);
+        for (CommentVo vo : commentVos) {
+            // 添加头像路径
+            if (null == userService.getById(vo.getCreateBy())){
+                vo.setAvatar("http://rqiojt6a0.hn-bkt.clouddn.com/2023/03/04/2f85e288daba43aeb35f886e2294ed89.png");
+            }else if (null == userService.getById(vo.getCreateBy()).getAvatar()){
+                vo.setAvatar("http://rqiojt6a0.hn-bkt.clouddn.com/2023/03/04/b2c341da7b674917bb079fc5648b5af6.png");
+            }else {
+                vo.setAvatar(userService.getById(vo.getCreateBy()).getAvatar());
+            }
+
+        }
         return commentVos;
 
     }
