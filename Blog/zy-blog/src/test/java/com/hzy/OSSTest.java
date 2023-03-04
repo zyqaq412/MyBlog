@@ -53,8 +53,8 @@ public class OSSTest {
 
         UploadManager uploadManager = new UploadManager(cfg);
         //...生成上传凭证，然后准备上传
-//        String accessKey = "_aXnhSNXI6MaaCefTPy4PfgFaj7qT0QsIZ9tq3l9";
-//        String secretKey = "GyUHAFKWnubudFc6iLeqMMR-dhHvOTJzitrvaxa3";
+//        String accessKey = "*************";
+//        String secretKey = "**************";
 //        String bucket = "qaq-blog";
 
         //默认不指定key的情况下，以文件内容的hash值作为文件名

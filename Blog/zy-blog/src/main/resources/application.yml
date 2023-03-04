@@ -4,10 +4,15 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/zy_blog?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root
-    password: 120125hzy.
+    #8
+    #driver-class-name: com.mysql。cj.jdbc.Driver
+    #url: jdbc:mysql://************:3306/zy_blog?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    #5
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://**********:3306/zy_blog?useSSL=false&allowMultiQueries=true
+    #username: root
+    username: zy_blog
+    password: *******
 
 
   servlet:
@@ -15,9 +20,10 @@ spring:
       max-file-size: 2MB
       max-request-size: 5MB
 mybatis-plus:
-  configuration:
-    # 日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # configuration:
+  # 日志
+  #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
   global-config:
     db-config:
       logic-delete-field: delFlag
@@ -25,6 +31,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 oss:
-  accessKey: _aXnhSNXI6MaaCefTPy4PfgFaj7qT0QsIZ9tq3l9
-  secretKey: GyUHAFKWnubudFc6iLeqMMR-dhHvOTJzitrvaxa3
+  accessKey: ************
+  secretKey: ************
   bucket: qaq-blog
+
