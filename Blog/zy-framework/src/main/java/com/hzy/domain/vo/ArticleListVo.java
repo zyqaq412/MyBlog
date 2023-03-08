@@ -32,6 +32,8 @@ public class ArticleListVo {
     private Long viewCount;
 
     private Date createTime;
+    //所属分类id
+    private Long categoryId;
 
 
 }
