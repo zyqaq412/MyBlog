@@ -9,12 +9,15 @@ import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.exception.SystemException;
 import com.hzy.service.CommentService;
 import com.hzy.utils.BeanCopyUtils;
+import com.hzy.utils.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 /**
  * @title: CommentController
@@ -73,8 +76,16 @@ public class CommentController {
     @PostMapping
     @SystemLog(BusinessName = "发送评论")
     public ResponseResult addComment(@RequestBody AddCommentDto addCommentDto){
-        Comment comment = BeanCopyUtils.copyBean(addCommentDto, Comment.class);
-        return commentService.addComment(comment);
+       try {
+           if (Objects.isNull(SecurityUtils.getLoginUser())){
+           }
+           Comment comment = BeanCopyUtils.copyBean(addCommentDto, Comment.class);
+           return commentService.addComment(comment);
+       }catch (Exception e){
+           return ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+       }
+
+
 
     }
 }

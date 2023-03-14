@@ -49,7 +49,7 @@ public class Article  {
     private Long createBy;
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private Long updateBy;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;

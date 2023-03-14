@@ -1,5 +1,6 @@
 package com.hzy.job;
 
+import com.hzy.annotion.SystemLog;
 import com.hzy.domain.entity.Article;
 import com.hzy.service.ArticleService;
 import com.hzy.utils.RedisCache;

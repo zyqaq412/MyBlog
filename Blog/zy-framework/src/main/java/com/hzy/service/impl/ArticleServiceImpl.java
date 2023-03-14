@@ -173,7 +173,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         queryWrapper.like(StringUtils.hasText(articleDto.getTitle()), Article::getTitle, articleDto.getTitle());
         queryWrapper.like(StringUtils.hasText(articleDto.getSummary()), Article::getSummary, articleDto.getSummary());
 //        2.规定文章是未发布状态不能显示
-        queryWrapper.eq(Article::getStatus,SystemConstants.ARTICLE_STATUS_NORMAL);
+        // queryWrapper.eq(Article::getStatus,SystemConstants.ARTICLE_STATUS_NORMAL);
 //        3.分页查询
         Page<Article> page = new Page<>(pageNum, pageSize);
         page(page, queryWrapper);
