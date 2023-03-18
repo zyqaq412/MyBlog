@@ -19,27 +19,8 @@
                     <a :href="'#/Share?classId='+detailObj.categoryId">{{detailObj.categoryName}}</a>
                 </div>
             </header>
-            <div class="article-content markdown-body" v-html="detailObj.content"></div>
+            <div class="article-content markdown-body" id="content" v-html="detailObj.content" ></div>
 
-            <div class="donate">
-<!--                <div class="donate-word">
-                    <span @click="pdonate=!pdonate">赞赏</span>
-                </div>-->
-                <el-row :class="pdonate?'donate-body':'donate-body donate-body-show'" :gutter="30">
-                    <el-col  :span="12"   class="donate-item">
-                        <div class="donate-tip">
-                            <img :src="detailObj.wechat_image?detailObj.wechat_image: 'static/img/wx_pay.png'" :onerror="$store.state.errorImg"/>
-                            <span>微信扫一扫，向我赞赏</span>
-                        </div>
-                    </el-col>
-                    <el-col :span="12"  class="donate-item">
-                        <div class="donate-tip">
-                            <img :src="detailObj.alipay_image?detailObj.alipay_image:'static/img/ali_pay.jpg'" :onerror="$store.state.errorImg"/>
-                            <span>支付宝扫一扫，向我赞赏</span>
-                        </div>
-                    </el-col>
-                </el-row>
-            </div>
         </div>
 </template>
 
@@ -55,9 +36,97 @@ import { mavonEditor } from 'mavon-editor'
                 detailObj:{},//返回详情数据
                 haslogin:false,//是否已经登录
                 userId:'',//用户id
+                tree:[],
             }
         },
-        methods: { //事件处理器
+      mounted () {
+        this.$nextTick(()=>{
+          setTimeout(()=>{
+            this.tete()
+          },500)
+
+        })
+      },
+      /*updated() {
+          // this.testqq()
+        this.tete()
+      },*/
+      methods: { //事件处理器
+        getVal(){
+      /*    console.log(1)
+          console.log(this.tree)*/
+          return this.tree
+        },
+
+        tete () {
+          const content = document.getElementById('content').children
+         console.log(content)
+
+
+          var arr = [{
+            content: '',
+            children: []
+          }]
+          let h1 = 0
+          let h2 = 0
+          let h3 = 0
+          let h4 = 0
+          let h5 = 0
+          for (let i = 0; i < content.length; i++) {
+            var element = { content: '', children: [] }
+            if (content[i].localName === 'h1') {
+
+              element.content = content[i].innerText
+              if (h1 === 0) {
+                arr[0] = element
+                h1++
+              } else {
+                arr.push(element)
+                h1++
+              }
+              h2 = 0
+              h3 = 0
+              h4 = 0
+              h5 = 0
+            }
+            if (content[i].localName === 'h2') {
+              element.content = content[i].innerText
+              arr[h1 - 1].children.push(element)
+              h2++
+              h3 = 0
+              h4 = 0
+              h5 = 0
+            }
+            if (content[i].localName === 'h3') {
+              element.content = content[i].innerText
+              arr[h1 - 1].children[h2 - 1].children.push(element)
+              h3++
+              h4 = 0
+              h5 = 0
+            }
+            if (content[i].localName === 'h4') {
+              element.content = content[i].innerText
+              arr[h1 - 1].children[h2 - 1].children[h3 - 1].children.push(element)
+              h4++
+              h5 = 0
+            }
+            if (content[i].localName === 'h5') {
+              element.content = content[i].innerText
+              arr[h1 - 1].children[h2 - 1].children[h3 - 1].children[h4 - 1].children.push(element)
+              h5++
+            }
+            if (content[i].localName === 'h6') {
+              element.content = content[i].innerText
+              arr[h1 - 1].children[h2 - 1].children[h3 - 1].children[h4 - 1].children[h5 - 1].children.push(element)
+            }
+          }
+
+          this.tree = arr;
+
+
+          //console.log(arr)
+        },
+
             showInitDate:function(date,full){//年月日的编辑
                 // console.log(detailObj.create_time,date,full);
                 return initDate(date,full);
@@ -68,6 +137,8 @@ import { mavonEditor } from 'mavon-editor'
                      const markdownIt = mavonEditor.getMarkdownIt()
                     // markdownIt.re
                     this.detailObj.content = markdownIt.render(response.content);
+                    // TODO HTMLCollection获取长度为0
+
                 })
             },
             routeChange:function(){
@@ -89,7 +160,8 @@ import { mavonEditor } from 'mavon-editor'
         },
         watch: {
            // 如果路由有变化，会再次执行该方法
-           '$route':'routeChange'
+           '$route':'routeChange',
+
          },
         components: { //定义组件
 
