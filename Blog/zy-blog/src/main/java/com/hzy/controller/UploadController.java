@@ -2,6 +2,7 @@ package com.hzy.controller;
 
 import com.hzy.annotion.SystemLog;
 import com.hzy.domain.ResponseResult;
+import com.hzy.service.FileService;
 import com.hzy.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
     @Autowired
     private UploadService uploadService;
-
+    @Autowired
+    private FileService fileService;
     /**
      * 上传头像
      * @param img
@@ -26,6 +28,7 @@ public class UploadController {
      */
     @PostMapping("/upload")
     public ResponseResult uploadImg(MultipartFile img){
-        return uploadService.uploadImg(img);
+        // return uploadService.uploadImg(multipartFile);
+        return fileService.uploadImg(img);
     }
 }
