@@ -24,11 +24,12 @@
                 ><i class="fa fa-fw fa-github"></i
               ></a>
             </el-tooltip>
-<!--            <el-tooltip class="item" effect="dark" content="QQ" placement="top">
-              <a :href="catchMeObj.qq" target="_blank"
-                ><i class="fa fa-fw fa-qq"></i
+
+            <el-tooltip class="item" effect="dark" content="CSDN" placement="top">
+              <a :href="catchMeObj.csdn" target="_blank"
+                ><i class="">C</i
               ></a>
-            </el-tooltip>-->
+            </el-tooltip>
 <!--            <el-tooltip
               class="item"
               effect="dark"
@@ -104,6 +105,7 @@ export default {
         git: "https://github.com/zyqaq412",
         qq: "/static/img/qq.png",
         wechat: "/static/img/wechat.png",
+        csdn:"https://blog.csdn.net/zxwyhzy",
       },
     };
   },

@@ -5,10 +5,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://***********:3306/*******?useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://47.109.90.13:3306/zy_blog?useSSL=false&allowMultiQueries=true
     #username: root
-    username: ******
-    password: ******
+    username: zy_blog
+    password: 120125hzy.
 
 
   servlet:
@@ -25,10 +25,10 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
-oss:
-  accessKey: ********
-  secretKey: ********
-  bucket: qaq-blog
+#oss:
+#  accessKey: LrnU-gOYl3G7PMpJTnI4eZyUcQKz6ID3rJeKjKrb
+#  secretKey: NexKDL8mHzWiP5OdoDXzfQ5AqSRiX_VpTFQ-lXlp
+#  bucket: qaq-blog
 
   # 配置redis
 #redis:
@@ -41,3 +41,9 @@ oss:
 #      max-idle: 8     #最大空闲连接数
 #      min-idle: 0     #最小空闲连接数
 #      max-wait: 100ms #等待连接时间
+
+oss:
+  endpoint: oss-cn-chengdu.aliyuncs.com
+  keyid: LTAI5tDwkMpEN267sGWBDB2q
+  keysecret: sIVcsIMjXc4rZoDwjhxU5mFs4QDgz9
+  bucketname: zyqaq-blog

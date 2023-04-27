@@ -66,7 +66,7 @@ public class OSSTest {
 
 
             InputStream inputStream =
-                    new FileInputStream("D:\\A浏览器下载\\图片\\1221407189.jpeg");
+                    new FileInputStream("D:\\A浏览器下载\\图片\\1.png");
             Auth auth = Auth.create(accessKey, secretKey);
             String upToken = auth.uploadToken(bucket);
 
