@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.ToEmail;
 import com.hzy.domain.entity.User;
 import com.hzy.domain.entity.UserRole;
 import com.hzy.domain.vo.PageVo;
@@ -16,6 +17,7 @@ import com.hzy.mapper.UserMapper;
 import com.hzy.service.UserRoleService;
 import com.hzy.service.UserService;
 import com.hzy.utils.BeanCopyUtils;
+import com.hzy.utils.RedisCache;
 import com.hzy.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +41,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRoleService userRoleService;
-
+    @Autowired
+    private RedisCache redisCache;
     /**
      * 根据当前登录用户id查询用户数据库信息
      * @return
@@ -74,6 +77,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public ResponseResult register(User user) {
         //对数据进行非空判断
+        if (!StringUtils.hasText(user.getCode())){
+            throw new SystemException(AppHttpCodeEnum.CODE_NOT_NULL);
+        }
         if(!StringUtils.hasText(user.getUserName())){
             throw new SystemException(AppHttpCodeEnum.USERNAME_NOT_NULL);
         }
@@ -93,13 +99,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if(nickNameExist(user.getNickName())){
             throw new SystemException(AppHttpCodeEnum.NICKNAME_EXIST);
         }
-        //...
-        //对密码进行加密
-        String encodePassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodePassword);
-        //存入数据库
-        save(user);
-        return ResponseResult.okResult();
+
+        String yzm = redisCache.getCacheObject(user.getEmail());
+        if (user.getCode().equals(yzm)){
+            //...
+            //对密码进行加密
+            String encodePassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodePassword);
+            //存入数据库
+            save(user);
+            return ResponseResult.okResult();
+        }
+
+        return ResponseResult.errorResult(400,"验证码错误");
+
+
     }
 
     @Override
@@ -164,6 +178,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         insertUserRole(user);
         // 更新用户信息
         updateById(user);
+    }
+
+    @Override
+    public boolean isEmailNull(ToEmail toEmail) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getEmail,toEmail.getTo());
+        long count = count(queryWrapper);
+        if (count <1 )
+            return true;
+        return false;
     }
 
     private void insertUserRole(User user) {

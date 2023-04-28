@@ -56,7 +56,9 @@ public class User  {
     //关联角色id数组，非user表字段
     @TableField(exist = false)
     private Long[] roleIds;
-
+    // 验证码
+    @TableField(exist = false)
+    private String code;
 
 
 }

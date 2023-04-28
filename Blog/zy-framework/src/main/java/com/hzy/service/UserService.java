@@ -2,6 +2,7 @@ package com.hzy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.ToEmail;
 import com.hzy.domain.entity.User;
 
 
@@ -45,5 +46,7 @@ public interface UserService extends IService<User> {
     ResponseResult addUser(User user);
 
     void updateUser(User user);
+
+    boolean isEmailNull(ToEmail toEmail);
 }
 

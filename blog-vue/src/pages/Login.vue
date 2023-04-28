@@ -3,7 +3,7 @@
     <div>
         <div class="container">
             <h1 class="loginTitle">
-                
+
             </h1>
             <!-- 登录注册 -->
             <div v-show="!err2005" class="">
@@ -75,6 +75,12 @@
                         placeholder="邮箱"
                         v-model="nemail">
                     </el-input>
+                  <el-input
+                    type="text"
+                    placeholder="验证码"
+                    v-model="code"
+                  >
+                  </el-input>
                     <el-alert
                         v-show="nemailErr"
                         title="邮箱错误"
@@ -105,6 +111,7 @@
                         show-icon  :closable="false">
                     </el-alert>
                     <div class="lr-btn tcolors-bg" @click="newRegister" v-loading.fullscreen.lock="fullscreenLoading"  element-loading-text="提交中">注册</div>
+                    <div class="lr-btn tcolors-bg" @click="newCode" >获取验证码</div>
                 </div>
             </div>
 
@@ -113,12 +120,14 @@
 </template>
 
 <script>
-import {userLogin,userRegister} from '../api/user.js'
+import {userLogin,userRegister,getCode} from '../api/user.js'
 import {setToken} from '../utils/auth.js'
+import axios from "axios";
     export default {
         name: 'Login',
         data() { //选项 / 数据
             return {
+                code:'',
                 username: '',//用户名
                 email: '',//邮箱
                 password: '',//密码
@@ -141,6 +150,12 @@ import {setToken} from '../utils/auth.js'
             }
         },
         methods: { //事件处理器
+          newCode() {
+
+            getCode(this.nemail).then((response)=>{
+
+            })
+          },
             routeChange:function(){
                 var that = this;
                 that.login = that.$route.query.login==undefined?1:parseInt(that.$route.query.login);//获取传参的login
@@ -167,7 +182,7 @@ import {setToken} from '../utils/auth.js'
                         this.$router.push({path:'/'});
                     }
                 })
-      
+
             },
             registerEnterFun: function(e){
                 var keyCode = window.event? e.keyCode:e.which;
@@ -202,7 +217,7 @@ import {setToken} from '../utils/auth.js'
                 }
                 if(!that.nusernameErr&&!that.nemailErr&&!that.npasswordErr){
                     that.fullscreenLoading = true;
-                    userRegister(that.nusername,that.nnickName,that.nemail,that.npassword).then((response)=>{
+                    userRegister(that.nusername,that.nnickName,that.nemail,that.npassword,that.code).then((response)=>{
                          //注册成功后调整到登录
                          that.goLogin()
                     }).catch((error)=>{

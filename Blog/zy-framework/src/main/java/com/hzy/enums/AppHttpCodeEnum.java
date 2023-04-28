@@ -27,7 +27,8 @@ public enum AppHttpCodeEnum {
     NICKNAME_EXIST(512, "昵称已存在"),
     UPDATE_MENU_NULL(513,"内容不能为空"),
     UPDATE_MENU_CF(514,"父菜单不能为自己"),
-    ADD_MENU_FAIL(515, "当前菜单已存在");
+    ADD_MENU_FAIL(515, "当前菜单已存在"),
+    CODE_NOT_NULL(508, "验证码不能为空");
 
 
 

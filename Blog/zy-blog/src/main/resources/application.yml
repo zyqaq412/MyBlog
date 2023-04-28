@@ -11,10 +11,23 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://47.109.90.13:3306/zy_blog?useSSL=false&allowMultiQueries=true
     #username: root
-    username: zy_blog
-    password: 120125hzy.
-
-
+    username:
+    password:
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    default-encoding: UTF-8
+    username: 2791517764@qq.com
+    password:
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    port: 587
   servlet:
     multipart:
       max-file-size: 2MB
@@ -38,9 +51,9 @@ mybatis-plus:
 
 oss:
   endpoint: oss-cn-chengdu.aliyuncs.com
-  keyid: LTAI5tDwkMpEN267sGWBDB2q
-  keysecret: sIVcsIMjXc4rZoDwjhxU5mFs4QDgz9
-  bucketname: zyqaq-blog
+  keyid:
+  keysecret:
+  bucketname:
 #  # 配置redis
 #redis:
 #  host: 47.109.90.13
