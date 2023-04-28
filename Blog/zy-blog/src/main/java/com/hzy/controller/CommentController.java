@@ -78,14 +78,12 @@ public class CommentController {
     public ResponseResult addComment(@RequestBody AddCommentDto addCommentDto){
        try {
            if (Objects.isNull(SecurityUtils.getLoginUser())){
+               return ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
            }
            Comment comment = BeanCopyUtils.copyBean(addCommentDto, Comment.class);
            return commentService.addComment(comment);
        }catch (Exception e){
-           return ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+           return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
        }
-
-
-
     }
 }

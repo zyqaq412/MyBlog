@@ -48,5 +48,8 @@ public interface UserService extends IService<User> {
     void updateUser(User user);
 
     boolean isEmailNull(ToEmail toEmail);
+
+    String getUserName(Long id);
+    String getUserMail(Long id);
 }
 

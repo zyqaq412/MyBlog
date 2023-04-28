@@ -190,6 +190,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return false;
     }
 
+    @Override
+    public String getUserName(Long id) {
+        User u = getById(id);
+        return u.getNickName();
+    }
+
+    @Override
+    public String getUserMail(Long id) {
+        return getById(id).getEmail();
+    }
+
     private void insertUserRole(User user) {
         List<UserRole> sysUserRoles = Arrays.stream(user.getRoleIds())
                 .map(roleId -> new UserRole(user.getId(), roleId)).collect(Collectors.toList());

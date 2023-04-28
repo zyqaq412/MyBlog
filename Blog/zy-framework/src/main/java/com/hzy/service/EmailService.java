@@ -19,4 +19,6 @@ public interface EmailService {
      * @return
      */
     ResponseResult commonEmail(ToEmail toEmail);
+
+    ResponseResult commentRemind(ToEmail toEmail);
 }

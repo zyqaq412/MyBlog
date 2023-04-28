@@ -12,17 +12,26 @@ export function userLogin(username,password) {
     })
 }
 
-export function userRegister(username,nickName,email,password) {
+export function userRegister(username,nickName,email,password,code) {
     return request({
         url: '/user/register',
         method: 'post',
         headers: {
             isToken :false
         },
-        data: {"username":username,"nickName":nickName,"email":email,"password":password}
+        data: {"username":username,"nickName":nickName,"email":email,"password":password,"code":code}
     })
 }
-
+export function getCode(email) {
+  return request({
+    url: '/mail',
+    method: 'post',
+    headers: {
+      isToken :false
+    },
+    data: {"to":email}
+  })
+}
 
 export function logout() {
     return request({

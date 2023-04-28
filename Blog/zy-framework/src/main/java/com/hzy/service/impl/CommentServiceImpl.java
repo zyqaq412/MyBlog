@@ -5,16 +5,20 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.constants.SystemConstants;
 import com.hzy.domain.ResponseResult;
+import com.hzy.domain.dto.ToEmail;
 import com.hzy.domain.entity.Comment;
 import com.hzy.domain.vo.CommentVo;
 import com.hzy.domain.vo.PageVo;
 import com.hzy.enums.AppHttpCodeEnum;
 import com.hzy.exception.SystemException;
 import com.hzy.mapper.CommentMapper;
+import com.hzy.service.ArticleService;
 import com.hzy.service.CommentService;
 
+import com.hzy.service.EmailService;
 import com.hzy.service.UserService;
 import com.hzy.utils.BeanCopyUtils;
+import com.hzy.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -31,6 +35,10 @@ import java.util.List;
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private ArticleService articleService;
 
     @Override
     public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
@@ -96,6 +104,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         return ResponseResult.okResult(new PageVo(commentVoList,page.getTotal()));
     }*/
 
+
+
     /**
      * 添加评论到数据库
      * @param comment
@@ -107,7 +117,35 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if(!StringUtils.hasText(comment.getContent())){
             throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
         }
-        save(comment);
+
+        StringBuffer buffer = new StringBuffer();
+        ToEmail toEmail = new ToEmail();
+        toEmail.setSubject("评论提醒");
+        if (comment.getRootId() == -1){
+            toEmail.setTo("2791517764@qq.com");
+            buffer.append(userService.getUserName(SecurityUtils.getUserId()));
+            buffer.append("\t");
+            buffer.append("在文章：");
+            buffer.append(articleService.getNameById(comment.getArticleId()));
+            buffer.append("\t评论了：\n");
+            buffer.append(comment.getContent());
+            toEmail.setContent(buffer.toString());
+            save(comment);
+            emailService.commentRemind(toEmail);
+        }else {
+            toEmail.setTo(userService.getUserMail(comment.getToCommentUserId()));
+            buffer.append(userService.getUserName(SecurityUtils.getUserId()));
+            buffer.append("\t");
+            buffer.append("在文章：");
+            buffer.append(articleService.getNameById(comment.getArticleId()));
+            buffer.append("评论了\t");
+            buffer.append("你");
+            buffer.append(":\n");
+            buffer.append(comment.getContent());
+            toEmail.setContent(buffer.toString());
+            save(comment);
+            emailService.commentRemind(toEmail);
+        }
         return ResponseResult.okResult();
     }
 

@@ -222,4 +222,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult();
     }
 
+    @Override
+    public String getNameById(Long id) {
+        Article a = getById(id);
+        return a.getTitle();
+    }
+
 }

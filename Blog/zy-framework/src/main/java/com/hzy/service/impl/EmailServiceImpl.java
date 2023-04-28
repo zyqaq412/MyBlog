@@ -59,4 +59,26 @@ public class EmailServiceImpl implements EmailService {
         }
         return ResponseResult.errorResult(503,"该邮箱已注册");
     }
+
+    @Override
+    public ResponseResult commentRemind(ToEmail toEmail) {
+        //创建简单邮件消息
+        SimpleMailMessage message = new SimpleMailMessage();
+        //谁发的
+        message.setFrom(from);
+        //谁要接收
+        message.setTo(toEmail.getTo());
+        //邮件标题
+        message.setSubject(toEmail.getSubject());
+        //邮件内容
+        message.setText(toEmail.getContent());
+        try {
+            mailSender.send(message);
+
+            return ResponseResult.okResult();
+        } catch (MailException e) {
+            e.printStackTrace();
+            return ResponseResult.errorResult(400,"发送失败");
+        }
+    }
 }

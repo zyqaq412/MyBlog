@@ -66,4 +66,12 @@ public interface ArticleService extends IService<Article> {
     ResponseResult updateArticleInfo(AdminArticleDto article);
 
     ResponseResult deleteArticleById(Long id);
+
+    /**
+     *  根据id获取文章名
+     * @param id 文章id
+     * @return 文章名
+     */
+
+    String getNameById(Long id);
 }
