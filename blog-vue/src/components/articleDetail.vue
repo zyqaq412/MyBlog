@@ -19,7 +19,8 @@
                     <a :href="'#/Share?classId='+detailObj.categoryId">{{detailObj.categoryName}}</a>
                 </div>
             </header>
-            <div class="article-content markdown-body" id="content" v-html="detailObj.content" ></div>
+<!--            <div class="article-content markdown-body" id="content" v-html="detailObj.content" ></div>-->
+            <div class="article-content markdown-body" id="content" v-html="show(detailObj.content)" ></div>
 
         </div>
 </template>
@@ -28,6 +29,10 @@
 import {initDate} from '../utils/server.js'
 import {getArticle,updateViewCount} from '../api/article.js'
 import { mavonEditor } from 'mavon-editor'
+import { marked } from 'marked'
+import hljs from 'highlight.js' // 代码块高亮
+import 'highlight.js/styles/github.css' // 代码块高亮样式
+import 'github-markdown-css' // 整体 markdown 样式
     export default {
         data() { //选项 / 数据
             return {
@@ -52,6 +57,16 @@ import { mavonEditor } from 'mavon-editor'
         this.tete()
       },*/
       methods: { //事件处理器
+        show(text){
+          if (text === '' || text ===  undefined) return
+          return marked(text, {
+            highlight: function (code, lang) {
+              const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+              return hljs.highlight(code, { language }).value;
+            },
+          });
+        },
+
         getVal(){
       /*    console.log(1)
           console.log(this.tree)*/
@@ -136,9 +151,8 @@ import { mavonEditor } from 'mavon-editor'
                     this.detailObj = response
                      const markdownIt = mavonEditor.getMarkdownIt()
                     // markdownIt.re
-                    this.detailObj.content = markdownIt.render(response.content);
+                   // this.detailObj.content = markdownIt.render(response.content);
                     // TODO HTMLCollection获取长度为0
-
                 })
             },
             routeChange:function(){

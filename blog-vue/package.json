@@ -1,8 +1,8 @@
 {
-  "name": "sg-vue-blog",
+  "name": "zyblog",
   "version": "1.0.0",
-  "description": "三更博客",
-  "author": "三更",
+  "description": "zy‘blog",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -13,8 +13,10 @@
     "axios": "^0.17.0",
     "element-ui": "^1.4.13",
     "js-cookie": "2.2.0",
+    "github-markdown-css": "^5.2.0",
     "mavon-editor": "^2.10.4",
     "vue": "^2.5.2",
+    "marked": "4.0.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
