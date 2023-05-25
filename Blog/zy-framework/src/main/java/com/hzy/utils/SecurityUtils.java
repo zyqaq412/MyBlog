@@ -21,8 +21,11 @@ public class SecurityUtils {
         // 定时任务执行时 更新文章表 文章表有自动填充的字段
         // 需要获取登录用户插入到updateBy
         // 执行时没有登录用户会报空指针异常
+
         if (!Objects.isNull(getAuthentication())) {
-            return (LoginUser) getAuthentication().getPrincipal();
+            if (!getAuthentication().getPrincipal().equals("anonymousUser")) {
+                return (LoginUser) getAuthentication().getPrincipal();
+            }
         }
         return null;
     }

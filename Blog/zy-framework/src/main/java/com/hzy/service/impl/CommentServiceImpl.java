@@ -35,7 +35,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-02-17 22:44:58
  */
-@Service("commentService")
+@Service()
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private UserService userService;
