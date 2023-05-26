@@ -14,7 +14,7 @@
                 </el-col>
                 <el-col :sm="24"  :md="8" >
                     <sg-rightlist></sg-rightlist>
-                    <div><el-tree :data="toc" :props="defaultProps" ></el-tree></div>
+                    <div><el-tree :data="toc" :props="defaultProps"  @node-click="handleNodeClick"></el-tree></div>
                 </el-col>
             </el-row>
         </div>
@@ -47,12 +47,19 @@ import message from '../components/message.vue'
               }
             }
         },
-        methods: { //事件处理器
+        methods: {
+          handleNodeClick(data) {
+            const position = data.position; // 获取节点的位置信息
+            window.scrollTo({
+              top: position+100,
+              behavior: 'smooth' // 平滑滚动
+            })
+          },//事件处理器
             handleEdit(){
 
               this.toc = this.$refs['articleDetail'].getVal();
 
-              console.log(this.toc)
+              console.log('toc',this.toc)
             }
         },
         components: { //定义组件
