@@ -77,9 +77,10 @@ export default {
       const content = document.getElementById('content').children
 
       var arr = [{
+        id:'h1_1',
         content: '',
         children: [],
-        position: 0 // 根标题的位置为0
+       // position: 0 // 根标题的位置为0
       }]
       let h1 = 0
       let h2 = 0
@@ -87,14 +88,18 @@ export default {
       let h4 = 0
       let h5 = 0
       for (let i = 0; i < content.length; i++) {
-        var element = {content: '',
+        var element = {
+          id:'',
+          content: '',
           children: [],
-          position: 0}
+       //   position: 0
+        }
         // 获取元素相对于窗口的位置
-        const rect = content[i].getBoundingClientRect();
-        element.position = rect.top;
+        /*const rect = content[i].getBoundingClientRect();
+        element.position = rect.top;*/
         if (content[i].localName === 'h1') {
           element.content = content[i].innerText
+          element.id = 'h1_' + h1;
           if (h1 === 0) {
             arr[0] = element
             h1++
@@ -106,6 +111,8 @@ export default {
           h3 = 0
           h4 = 0
           h5 = 0
+          // 添加锚点
+          content[i].id = 'h1_' + h1;
         }
         if (content[i].localName === 'h2') {
           element.content = content[i].innerText
@@ -114,6 +121,7 @@ export default {
           h3 = 0
           h4 = 0
           h5 = 0
+          element.id = 'h2_' + h1 + '_' + h2;
         }
         if (content[i].localName === 'h3') {
           element.content = content[i].innerText
@@ -121,29 +129,30 @@ export default {
           h3++
           h4 = 0
           h5 = 0
+          element.id = 'h3_' + h1 + '_' + h2 + '_' + h3;
         }
         if (content[i].localName === 'h4') {
           element.content = content[i].innerText
           arr[h1 - 1].children[h2 - 1].children[h3 - 1].children.push(element)
           h4++
           h5 = 0
+          element.id = 'h4_' + h1 + '_' + h2 + '_' + h3 + '_' + h4;
         }
         if (content[i].localName === 'h5') {
           element.content = content[i].innerText
           arr[h1 - 1].children[h2 - 1].children[h3 - 1].children[h4 - 1].children.push(element)
           h5++
+          element.id = 'h5_' + h1 + '_' + h2 + '_' + h3 + '_' + h4 + '_' + h5;
         }
         if (content[i].localName === 'h6') {
           element.content = content[i].innerText
           arr[h1 - 1].children[h2 - 1].children[h3 - 1].children[h4 - 1].children[h5 - 1].children.push(element)
+          element.id = 'h6_' + h1 + '_' + h2 + '_' + h3 + '_' + h4 + '_' + h5;
         }
+        // 在每个标题元素上添加锚点链接
+        content[i].id = element.id;
+        this.tree = arr;
       }
-
-      this.tree = arr;
-
-
-      console.log('arr', arr)
-      console.log('tree', this.tree)
     },
 
     showInitDate: function (date, full) {//年月日的编辑

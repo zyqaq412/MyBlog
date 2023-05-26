@@ -14,7 +14,11 @@
                 </el-col>
                 <el-col :sm="24"  :md="8" >
                     <sg-rightlist></sg-rightlist>
-                    <div><el-tree :data="toc" :props="defaultProps"  @node-click="handleNodeClick"></el-tree></div>
+<!--                    <div><el-tree :data="toc" :props="defaultProps"  @node-click="handleNodeClick"></el-tree></div>-->
+                  <div class="sticky-tree-container" >
+                    <el-tree :data="toc" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+                  </div>
+
                 </el-col>
             </el-row>
         </div>
@@ -44,17 +48,41 @@ import message from '../components/message.vue'
               defaultProps: {
                 children: 'children',
                 label: 'content'
-              }
+              },
+              containerTop:'',
             }
         },
         methods: {
           handleNodeClick(data) {
-            const position = data.position; // 获取节点的位置信息
+/*            const position = data.position; // 获取节点的位置信息
             window.scrollTo({
               top: position+100,
               behavior: 'smooth' // 平滑滚动
-            })
-          },//事件处理器
+            })*/
+            // 获取锚点ID
+            console.log('id',data.id)
+            const anchorId = data.id;
+
+            // 滚动到锚点位置
+            const anchorElement = document.getElementById(anchorId);
+            console.log('anchorElement', anchorElement);
+            if (anchorElement) {
+              anchorElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          },
+          checkTreePosition() {
+            const treeContainer = document.querySelector('.sticky-tree-container');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            console.log('scrollTop',scrollTop)
+            console.log('this.containerTop',this.containerTop)
+            if (scrollTop > this.containerTop) {
+              treeContainer.classList.add('fixed');
+            } else {
+              treeContainer.classList.remove('fixed');
+            }
+          },
+
+          //事件处理器
             handleEdit(){
 
               this.toc = this.$refs['articleDetail'].getVal();
@@ -77,17 +105,40 @@ import message from '../components/message.vue'
               this.handleEdit()
             },1000)
           })
-            var anchor = document.querySelector("#detail");
+/*            var anchor = document.querySelector("#detail");
             // console.log(anchor,anchor.offsetTop);
             var top = anchor.offsetTop-60;
             document.body.scrollTop = top;
              // Firefox
              document.documentElement.scrollTop = top;
              // Safari
-             window.pageYOffset = top;
-        }
+             window.pageYOffset = top;*/
+          // 跳转到文章标题位置
+          var anchor = document.querySelector("#detail");
+          var top = anchor.offsetTop - 60;
+          window.scrollTo({
+            top: top,
+            behavior: "smooth"
+          });
+          //TODO 目录固定显示
+            /*this.containerTop =document.querySelector('.sticky-tree-container').offsetTop;
+            window.addEventListener('scroll', this.checkTreePosition);*/
+        },
+/*        beforeDestroy() {
+        window.removeEventListener('scroll', this.checkTreePosition);
+      }*/
     }
 </script>
 
 <style>
+.sticky-tree-container {
+  position: sticky;
+  top: 0;
+}
+.fixed {
+  position: fixed !important;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+}
 </style>
