@@ -70,4 +70,17 @@ public class ArticleController {
     public ResponseResult updateViewCount(@PathVariable("id") Long id){
         return articleService.updateViewCount(id);
     }
+
+    /**
+     *  文章搜索
+     * @param queryString 搜索内容
+     * @return 搜索结果
+     */
+    @GetMapping("/search")
+    public ResponseResult searchArticle(@RequestParam("queryString") String queryString) {
+        if ("".equals(queryString)){
+            return ResponseResult.okResult();
+        }
+        return articleService.searchArticle(queryString);
+    }
 }

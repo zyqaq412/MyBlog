@@ -18,6 +18,7 @@ import com.hzy.service.ArticleTagService;
 import com.hzy.service.CategoryService;
 import com.hzy.utils.BeanCopyUtils;
 import com.hzy.utils.RedisCache;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private CategoryService categoryService;
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    private ArticleMapper articleMapper;
+
     @Override
     public ResponseResult hotArticleList() {
 
@@ -49,8 +53,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // 按照浏览量进行排序
         queryWrapper.orderByDesc(Article::getViewCount);
         // 最多只查询10条
-        Page<Article> page = new Page(1,10);
-        page(page,queryWrapper);
+        Page<Article> page = new Page(1, 10);
+        page(page, queryWrapper);
 
         List<Article> articles = page.getRecords();
 
@@ -77,15 +81,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //查询条件
         LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 如果 有categoryId 就要 查询时要和传入的相同
-        lambdaQueryWrapper.eq(Objects.nonNull(categoryId)&&categoryId>0 ,Article::getCategoryId,categoryId);
+        lambdaQueryWrapper.eq(Objects.nonNull(categoryId) && categoryId > 0, Article::getCategoryId, categoryId);
         // 状态是正式发布的
-        lambdaQueryWrapper.eq(Article::getStatus,SystemConstants.ARTICLE_STATUS_NORMAL);
+        lambdaQueryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL);
         // 对isTop进行降序
         lambdaQueryWrapper.orderByDesc(Article::getIsTop);
 
         //分页查询
-        Page<Article> page = new Page<>(pageNum,pageSize);
-        page(page,lambdaQueryWrapper);
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        page(page, lambdaQueryWrapper);
 
         // 查询categoryName
         List<Article> articles = page.getRecords();
@@ -116,7 +120,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(page.getRecords(), ArticleListVo.class);
 
-        PageVo pageVo = new PageVo(articleListVos,page.getTotal());
+        PageVo pageVo = new PageVo(articleListVos, page.getTotal());
         return ResponseResult.okResult(pageVo);
     }
 
@@ -132,7 +136,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //根据分类id查询分类名
         Long categoryId = articleDetailVo.getCategoryId();
         Category category = categoryService.getById(categoryId);
-        if(category!=null){
+        if (category != null) {
             articleDetailVo.setCategoryName(category.getName());
         }
         //封装响应返回
@@ -142,7 +146,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public ResponseResult updateViewCount(Long id) {
         //更新redis中对应 id的浏览量
-        redisCache.incrementCacheMapValue("article:viewCount",id.toString(),1);
+        redisCache.incrementCacheMapValue("article:viewCount", id.toString(), 1);
         return ResponseResult.okResult();
     }
 
@@ -189,7 +193,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public ResponseResult getArticleById(Long id) {
         Article article = getById(id);
-        UpdateArticleVo updateArticleVo = BeanCopyUtils.copyBean(article,UpdateArticleVo.class);
+        UpdateArticleVo updateArticleVo = BeanCopyUtils.copyBean(article, UpdateArticleVo.class);
         // 根据文章id获取到文章标签列表
         List<Long> tagList = articleTagService.getTagList(id);
         updateArticleVo.setTags(tagList);
@@ -201,14 +205,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         // 1.将AdminArticleDto对象转换为Article对象
         Article article = BeanCopyUtils.copyBean(adminArticleDto, Article.class);
-         //  2.将博客的标签信息存入标签表
+        //  2.将博客的标签信息存入标签表
 //          2.1根据当前博客id获取到已有的标签列表
         List<Long> tagList = articleTagService.getTagList(article.getId());
 //          2.2得到修改过后的标签列表
         List<Long> tags = article.getTags();
 //          2.3遍历修改过后的标签列表，判断当前博客是否已经有此标签，没有则一条数据添加到sg_article_tag表中
-        for (Long tag:tags){
-            if (!tagList.contains(tag)){
+        for (Long tag : tags) {
+            if (!tagList.contains(tag)) {
                 articleTagService.save(new ArticleTag(article.getId(), tag));
             }
         }
@@ -226,6 +230,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public String getNameById(Long id) {
         Article a = getById(id);
         return a.getTitle();
+    }
+
+    @Override
+    public ResponseResult searchArticle(String queryString) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(queryString), Article::getTitle, queryString)
+                .or()
+                .like(StringUtils.hasText(queryString), Article::getSummary, queryString);
+        List<Article> resultList = articleMapper.selectList(queryWrapper);
+        List<searchArticleVo> res = resultList.stream()
+                .map(article -> new searchArticleVo(article.getId(), article.getTitle()))
+                .collect(Collectors.toList());
+        return ResponseResult.okResult(res);
     }
 
 }

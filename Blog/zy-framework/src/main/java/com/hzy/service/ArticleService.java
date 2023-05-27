@@ -74,4 +74,6 @@ public interface ArticleService extends IService<Article> {
      */
 
     String getNameById(Long id);
+
+    ResponseResult searchArticle(String queryString);
 }
