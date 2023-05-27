@@ -34,17 +34,7 @@ import message from '../components/message.vue'
         name:'DetailShare',
         data() { //选项 / 数据
             return {
-              toc: [
-               /* {
-                  content:"<a id=\"1Mybatis_0\"></a>1.什么是Mybatis？",
-                  children: [{
-                    content:"<a id=\"1Mybatis_0\"></a>1.什么是Mybatis？",
-                    children: [{
-                      content:"<a id=\"1Mybatis_0\"></a>1.什么是Mybatis？",
-                    }]
-                  }]
-                },*/
-              ],    //目录节点数据
+              toc:[],    //目录节点数据
               defaultProps: {
                 children: 'children',
                 label: 'content'
@@ -52,13 +42,9 @@ import message from '../components/message.vue'
               containerTop:'',
             }
         },
+
         methods: {
           handleNodeClick(data) {
-/*            const position = data.position; // 获取节点的位置信息
-            window.scrollTo({
-              top: position+100,
-              behavior: 'smooth' // 平滑滚动
-            })*/
             // 获取锚点ID
             console.log('id',data.id)
             const anchorId = data.id;
@@ -83,12 +69,11 @@ import message from '../components/message.vue'
           },
 
           //事件处理器
-            handleEdit(){
-
-              this.toc = this.$refs['articleDetail'].getVal();
-
+/*            handleEdit(){
+              this.toc = this.$store.state.tree
               console.log('toc',this.toc)
-            }
+              console.log('tree',this.$store.state.tree)
+            }*/
         },
         components: { //定义组件
             'sg-nav':header,
@@ -97,25 +82,24 @@ import message from '../components/message.vue'
             'sg-rightlist':rightlist,
         },
         created() { //生命周期函数
-
+          // 当this.$store.state.tree的值发生变化 就执行该函数
+          this.$store.watch(
+            () => this.$store.state.tree,
+            (newTree) => {
+              this.toc = newTree;
+            }
+          );
         },
         mounted(){
-          this.$nextTick(()=>{
-            setTimeout(()=>{
-              this.handleEdit()
-            },1000)
-          })
-/*            var anchor = document.querySelector("#detail");
-            // console.log(anchor,anchor.offsetTop);
-            var top = anchor.offsetTop-60;
-            document.body.scrollTop = top;
-             // Firefox
-             document.documentElement.scrollTop = top;
-             // Safari
-             window.pageYOffset = top;*/
+/*          setTimeout(()=>{
+            this.toc = this.$refs['articleDetail'].tete();
+            console.log('toc',this.toc)
+            console.log('this.$store.state.tree',this.$store.state.tree)
+            this.toc=this.$store.state.tree
+          },1500)*/
           // 跳转到文章标题位置
-          var anchor = document.querySelector("#detail");
-          var top = anchor.offsetTop - 60;
+          const anchor = document.querySelector("#detail");
+          const top = anchor.offsetTop - 60;
           window.scrollTo({
             top: top,
             behavior: "smooth"

@@ -14,6 +14,17 @@
 						</el-submenu>
 <!--						<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item>-->
 						<el-menu-item index="/Friendslink"><i class="fa fa-wa fa-users"></i>友链</el-menu-item>
+            <!-- 搜索功能 -->
+            <el-autocomplete
+              autocomplete="off"
+              size="medium"
+              v-model="inputdata"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="搜索文章"
+              @select="handleSelectTitle"
+            >
+              <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            </el-autocomplete>
 
 						<div class="userInfo">
 							<div v-show="!haslogin" class="nologin">
@@ -60,9 +71,12 @@ import {getCategoryList} from '../api/category'
 import {
 	Typeit
 } from '../utils/plug.js'
+import {searchArticle} from "../api/article";
 export default {
 	data() { //选项 / 数据
 		return {
+      inputdata:'',
+      dataList:[],
 			userInfo: '', //用户信息
 			haslogin: false, //是否已登录
 			classListObj: '', //分类
@@ -80,6 +94,30 @@ export default {
 
 	},*/
 	methods: { //事件处理器
+    //事件处理器
+    querySearchAsync(queryString, cb) {
+      console.log(this.inputdata+"------")
+      console.log(queryString+"queryString")
+
+      if (this.inputdata != ""){
+        searchArticle(this.inputdata).then((res)=>{
+          this.dataList = res
+          console.log(this.dataList)
+          cb(this.dataList);
+        })
+      }else {
+        cb([]);
+      }
+
+
+
+
+    },
+    handleSelectTitle(item) {
+      console.log(item.id);
+      console.log(this.inputdata)
+      this.$router.push({ path: '/DetailArticle?aid=' + item.id });
+    },
 		handleOpen(key, keyPath) { //分组菜单打开
 			// console.log(key, keyPath);
 		},

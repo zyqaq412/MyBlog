@@ -11,8 +11,9 @@ export const state = {
   keywords:'',//关键词
   //errorImg: 'this.onerror=null;this.src="' + require('../../static/img/tou.jpg') + '"',
   errorImg: 'static/img/morentouxiang.png',
-  //baseURL:'http://localhost:7777/'
- baseURL:'http://47.109.90.13:7777/'
+  // baseURL:'http://localhost:7777/',
+ baseURL:'http://47.109.90.13:7777/',
+  tree:[]
 }
 
 export default new Vuex.Store({

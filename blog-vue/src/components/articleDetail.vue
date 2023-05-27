@@ -45,17 +45,11 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.tete()
-      }, 500)
-
-    })
+/*    setTimeout(()=>{
+      this.tete()
+    },1000)*/
   },
-  /*updated() {
-      // this.testqq()
-    this.tete()
-  },*/
+
   methods: { //事件处理器
     show(text) {
       if (text === '' || text === undefined) return
@@ -67,20 +61,13 @@ export default {
       });
     },
 
-    getVal() {
-      /*    console.log(1)
-          console.log(this.tree)*/
-      return this.tree
-    },
-
     tete() {
       const content = document.getElementById('content').children
-
+      console.log('content',content)
       var arr = [{
         id:'h1_1',
         content: '',
         children: [],
-       // position: 0 // 根标题的位置为0
       }]
       let h1 = 0
       let h2 = 0
@@ -151,8 +138,11 @@ export default {
         }
         // 在每个标题元素上添加锚点链接
         content[i].id = element.id;
-        this.tree = arr;
       }
+      console.log('arr',arr)
+      this.$store.state.tree = arr;
+      console.log('store',this.$store.state.tree)
+      // this.tree = arr;
     },
 
     showInitDate: function (date, full) {//年月日的编辑
@@ -162,7 +152,11 @@ export default {
     getArticleDetail: function () {
       getArticle(this.aid).then((response) => {
         this.detailObj = response
-        const markdownIt = mavonEditor.getMarkdownIt()
+        // const markdownIt = mavonEditor.getMarkdownIt()
+        console.log("获取文章详情")
+        setTimeout(()=>{
+          this.tete()
+        },1200)
         // markdownIt.re
         // this.detailObj.content = markdownIt.render(response.content);
         // TODO HTMLCollection获取长度为0

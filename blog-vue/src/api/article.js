@@ -34,6 +34,19 @@ export function getArticle(articleId) {
     })
 }
 
+export function searchArticle(queryString) {
+  return request({
+    url: '/article/search',
+    headers: {
+      isToken: false
+    },
+    method: 'get',
+    params: {
+      queryString: queryString
+    }
+  })
+}
+
 export function updateViewCount(articleId) {
     return request({
         url: '/article/updateViewCount/' + articleId,
@@ -42,5 +55,5 @@ export function updateViewCount(articleId) {
         },
         method: 'put'
     })
-    
+
 }
