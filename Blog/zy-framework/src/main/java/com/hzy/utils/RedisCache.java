@@ -1,10 +1,7 @@
 package com.hzy.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -244,5 +241,30 @@ public class RedisCache
      */
     public void incrementCacheMapValue(String key,String hKey,long v){
         redisTemplate.boundHashOps(key).increment(hKey, v);
+    }
+    /**
+     * 添加元素,有序集合是按照元素的score值由小到大排列
+     *
+     * @param key
+     * @param value
+     * @param score
+     * @return
+     */
+    public Boolean zAdd(String key, String value, double score) {
+        return redisTemplate.opsForZSet().add(key, value, score);
+    }
+    public Set<Object> getMembersInRangeByScore(String key, double min, double max) {
+        ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
+        return zSetOperations.rangeByScore(key, min, max);
+    }
+    public Long zRemove(String key, Collection<String> values) {
+        if(values!=null&&!values.isEmpty()){
+            Object[] objs = values.toArray(new Object[values.size()]);
+            return redisTemplate.opsForZSet().remove(key, objs);
+        }
+        return 0L;
+    }
+    public Long zRemove(String key, Object... values) {
+        return redisTemplate.opsForZSet().remove(key, values);
     }
 }

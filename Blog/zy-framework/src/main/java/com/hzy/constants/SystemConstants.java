@@ -12,6 +12,8 @@ package com.hzy.constants;
  */
 public class SystemConstants {
 
+        public static final String REDIS_TASK_KEY = "Task";
+
         /**
          *  文章是草稿
          */

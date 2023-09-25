@@ -12,6 +12,12 @@ import java.sql.Array;
 
 public interface ArticleService extends IService<Article> {
     /**
+     *  发布文章
+     * @param articleDto
+     * @return
+     */
+    ResponseResult addArticle(AddArticleDto articleDto);
+    /**
      * 查询热门文章
      * @return
      */

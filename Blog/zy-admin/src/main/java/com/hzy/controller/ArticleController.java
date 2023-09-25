@@ -29,7 +29,7 @@ public class ArticleController {
      */
     @PostMapping
     public ResponseResult add(@RequestBody AddArticleDto article){
-        return articleService.add(article);
+        return articleService.addArticle(article);
     }
 
     /**

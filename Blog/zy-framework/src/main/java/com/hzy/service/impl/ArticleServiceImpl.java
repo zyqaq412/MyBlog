@@ -1,5 +1,6 @@
 package com.hzy.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -152,6 +153,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private ArticleTagService articleTagService;
+
+    @Override
+    public ResponseResult addArticle(AddArticleDto articleDto){
+        if (articleDto.getExecuteTime()>System.currentTimeMillis()){
+            // 需要定时发布
+            // 添加到redis延迟队列
+            redisCache.zAdd(SystemConstants.REDIS_TASK_KEY,
+                    JSONObject.toJSONString(articleDto),
+                    articleDto.getExecuteTime());
+            return ResponseResult.okResult();
+
+        }else {
+            return add(articleDto);
+        }
+
+    }
 
     @Override
     @Transactional
