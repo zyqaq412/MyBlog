@@ -1,34 +1,29 @@
-## 项目介绍 ✨
+# 项目介绍 ✨
 
 项目名称：zy‘Blog
 
-在线访问：http://47.109.90.13
+## 项目演示
 
-项目源代码：https://github.com/zyqaq412/MyBlog
+支持图片，支持目录生成
 
-项目介绍：基于Vue + Spring Boot + SpringSecurity + MybatisPlus + Redis+ MySQL 的个人技术分享平台
+![image-20231101235143256](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012355864.png)
 
-1. 使用Ant Design Pro 脚手架 + 自建Spring Boot 项目模板快速构建初始web项目。
+支持代码高亮
 
-2. 该项目采用多模块开发，包含公共、前台、后台模块，并使用 Maven 进行多模块依赖管理和打包。
+![image-20231101235215064](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012355865.png)
 
-3. 为解决多个子模块内代码大量重复的问题，抽象模型层和业务层代码为公共模块，大幅度减少重复代码。
+搜索提示
 
-4. 基于 MyBatis Plus 框架的QueryWrapper实现对MySQL数据库的灵活查询。
+![image-20231101235314549](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012355866.png)
 
-5. 使用SpringSecurity安全框架实现用户的登录认证与权限管理
+支持多级评论
 
-6. 使用阿里云OSS实现文章图片与的上传存储
+![image-20231101235445990](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012355867.png)
 
-7. 实现了以下功能：用户的登录与注册、系统的权限管理、发表编辑博客、博客查阅、
+支持评论提醒
 
-    博客删除、博客评论、博客目录，个人信息页展示、个人信息的修改，
+![image-20231101235512650](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012355868.png)
 
-    首页信息显示如热门博客、所有博客列表，阅读量的统计，博客的分类查询与模糊查询。
+## 后台管理
 
-    为管理员提供了后台管理系统，用来管理与维护博客系统，如用户管理，博客管理等。
-
-项目收获：通过学习该项目，我知道了如何多个技术栈有效地结合起来构建一个完整的应用系统，
-				  通过这次项目多模块开发的经验，我能够更好地组织和管理项目的代码结构，提高代码的可维护性和复用性，
-				  学会了使用Spring Security安全框架实现用户的登录认证和权限管理，
-				  学会了多种功能的实现方法与业务逻辑为今后的开发提供参考。
+![image-20231101235655857](https://cdn.jsdelivr.net/gh/zxwyhzy/zy-img1/md/202311012357746.png)
